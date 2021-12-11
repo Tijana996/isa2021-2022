@@ -1,0 +1,31 @@
+<mat-card>
+    <mat-card-content>
+
+    <form class="reactiveForm" [formGroup] = "registrationForm" (submit) = "onSubmit()">
+    <h2>Sign up</h2>
+        <div fxLayout="column">
+            <mat-form-field class="full-width-input">
+                <input matInput placeholder="Email" name="email" formControlName="email" required/>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-input">
+                <input matInput type="password" placeholder="Password" name="password" formControlName="password" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-input">
+                <input matInput type="password" placeholder="Password confirm" name="passwordc" formControlName="passwordc" required>
+            </mat-form-field>
+
+            
+
+
+        </div>
+        
+        <button mat-raised-button color="primary" id = "registerBtn" [disabled] = "registrationForm.invalid">Sign up</button>
+        <mat-error name="errorRegister" *ngIf=wrong style="margin-top: 5%;">
+            {{errorMessage}}
+        </mat-error>    
+    </form>
+
+    </mat-card-content>
+</mat-card>
