@@ -47,6 +47,8 @@ public class KorisnikService implements ServiceInterface<Korisnik> {
 			if (existUserMail != null) {
 				throw new Exception("Email already exists");
 			}
+			entity.setLozinka(passwordEncoder.encode(entity.getLozinka()));
+			//entity.setEnabled(true);
 			user = repository.save(entity);
 		}
 		catch (Exception e)
