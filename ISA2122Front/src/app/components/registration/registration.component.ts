@@ -28,7 +28,12 @@ export class RegistrationComponent implements OnInit {
       'email':['',[Validators.required, Validators.email]],
       'password' : ['', Validators.required],
       'passwordc' : ['', Validators.required],
-      
+      'adresa' : ['', Validators.required],
+      'drzava' : ['', Validators.required],
+      'broj' : ['', Validators.required],
+      'grad' : ['', Validators.required],
+      'ime' : ['', Validators.required],
+      'prezime' : ['', Validators.required]
     });
   }
 
@@ -47,12 +52,12 @@ export class RegistrationComponent implements OnInit {
       this.user = new UserReg();
       this.user.email = this.registrationForm.controls['email'].value;
       this.user.password = this.registrationForm.controls['password'].value;
-      // this.user.adresa = this.registrationForm.controls['adresa'].value;
-      // this.user.broj = this.registrationForm.controls['broj'].value;
-      // this.user.drzava = this.registrationForm.controls['drzava'].value;
-      // this.user.grad = this.registrationForm.controls['grad'].value;
-      // this.user.ime = this.registrationForm.controls['ime'].value;
-      // this.user.prezime = this.registrationForm.controls['prezime'].value;
+      this.user.adresa = this.registrationForm.controls['adresa'].value;
+      this.user.broj = this.registrationForm.controls['broj'].value;
+      this.user.drzava = this.registrationForm.controls['drzava'].value;
+      this.user.grad = this.registrationForm.controls['grad'].value;
+      this.user.ime = this.registrationForm.controls['ime'].value;
+      this.user.prezime = this.registrationForm.controls['prezime'].value;
       //this.user = this.registrationForm.value;
       console.log(this.user);
       this.regService.signup(this.user).subscribe( 

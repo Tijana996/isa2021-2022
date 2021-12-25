@@ -4,16 +4,18 @@ import com.ftn.ISA2122.dto.UserDTO;
 import com.ftn.ISA2122.dto.UserLoginDTO;
 import com.ftn.ISA2122.dto.UserTokenStateDTO;
 import com.ftn.ISA2122.helper.UserRegMapper;
+import com.ftn.ISA2122.model.Klijent;
 import com.ftn.ISA2122.model.Korisnik;
+import com.ftn.ISA2122.model.ZahtevZaRegistraciju;
 import com.ftn.ISA2122.security.TokenUtils;
 import com.ftn.ISA2122.service.KorisnikService;
+import com.ftn.ISA2122.service.ZahtevZaRegistracijuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,6 +34,9 @@ public class AuthenticationController {
 
     @Autowired
     private KorisnikService userService;
+
+    @Autowired
+    private ZahtevZaRegistracijuService zahtevZaRegistracijuService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -70,8 +75,11 @@ public class AuthenticationController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> registerUser(@RequestBody @Valid UserDTO userRequest, UriComponentsBuilder ucBuilder) throws Exception {
        try {
-           Korisnik k = userMapper.toEntity(userRequest);
-           Korisnik user = userService.create(k);
+           Klijent k = userMapper.toEntity(userRequest);
+           Korisnik user = userService.createKlijent(k);
+           ZahtevZaRegistraciju entity = new ZahtevZaRegistraciju();
+           entity.setKorisnik(user);
+           zahtevZaRegistracijuService.create(entity);
            //HttpHeaders headers = new HttpHeaders();
            //headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
            //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));

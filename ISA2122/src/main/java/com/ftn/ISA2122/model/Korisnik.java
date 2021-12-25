@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -28,6 +27,24 @@ public class Korisnik implements UserDetails {
 
     @Column(name="lozinka", unique=false, nullable=false)
     private String lozinka;
+
+    @Column
+    private String ime;
+
+    @Column
+    private String prezime;
+
+    @Column
+    private String adresa;
+
+    @Column
+    private String grad;
+
+    @Column
+    private String drzava;
+
+    @Column
+    private String broj;
 
     @Column
     private int poeni;
@@ -56,6 +73,21 @@ public class Korisnik implements UserDetails {
     public Korisnik(String email, String lozinka){
         this.email = email;
         this.lozinka = lozinka;
+    }
+
+    public Korisnik(String email, String lozinka, String ime, String prezime, String adresa, String grad, String drzava, String broj, int poeni, int kategorija, int penali, boolean enabled) {
+        this.email = email;
+        this.lozinka = lozinka;
+        this.ime = ime;
+        this.prezime = prezime;
+        this.adresa = adresa;
+        this.grad = grad;
+        this.drzava = drzava;
+        this.broj = broj;
+        this.poeni = poeni;
+        this.kategorija = kategorija;
+        this.penali = penali;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -104,6 +136,54 @@ public class Korisnik implements UserDetails {
 
     public void setPenali(int penali) {
         this.penali = penali;
+    }
+
+    public String getIme() {
+        return ime;
+    }
+
+    public void setIme(String ime) {
+        this.ime = ime;
+    }
+
+    public String getPrezime() {
+        return prezime;
+    }
+
+    public void setPrezime(String prezime) {
+        this.prezime = prezime;
+    }
+
+    public String getAdresa() {
+        return adresa;
+    }
+
+    public void setAdresa(String adresa) {
+        this.adresa = adresa;
+    }
+
+    public String getGrad() {
+        return grad;
+    }
+
+    public void setGrad(String grad) {
+        this.grad = grad;
+    }
+
+    public String getDrzava() {
+        return drzava;
+    }
+
+    public void setDrzava(String drzava) {
+        this.drzava = drzava;
+    }
+
+    public String getBroj() {
+        return broj;
+    }
+
+    public void setBroj(String broj) {
+        this.broj = broj;
     }
 
     @Override

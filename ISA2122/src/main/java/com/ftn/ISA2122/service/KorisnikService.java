@@ -59,14 +59,14 @@ public class KorisnikService implements ServiceInterface<Korisnik> {
 		return user;
 	}
 
-	public Korisnik createPacijent(Korisnik entity) throws Exception {
+	public Korisnik createKlijent(Korisnik entity) throws Exception {
 		Korisnik existUser = repository.findByEmail(entity.getEmail());
 		if (existUser != null) {
 			throw new Exception("Email already exists");
 		}
 
 		entity.setLozinka(passwordEncoder.encode(entity.getLozinka()));
-		Authority authority =  authorityRepository.findByName("ROLE_USER");
+		Authority authority =  authorityRepository.findByName("ROLE_KLIJENT");
 		List<Authority> authorities = new ArrayList<>();
 		authorities.add(authority);
 		entity.setAuthorities(authorities);
