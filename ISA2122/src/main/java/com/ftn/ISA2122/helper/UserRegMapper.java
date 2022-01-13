@@ -13,6 +13,6 @@ public class UserRegMapper implements MapperInterface<Klijent, UserDTO> {
 
     @Override
     public UserDTO toDto(Klijent entity) {
-        return new UserDTO(entity.getEmail(), null);
+        return new UserDTO(entity);
     }
 }

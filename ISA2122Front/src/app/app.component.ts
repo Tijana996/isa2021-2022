@@ -13,11 +13,11 @@ export class AppComponent {
     private router: Router){}
 
   ngOnInit(): void {
-    if(this.authService.isLoggedIn())
-      this.router.navigate(['/home-page-user']); 
+    
   }
 
   loggedIn():boolean{
+    //console.log(this.authService.isLoggedIn())
     if(this.authService.isLoggedIn()){
       return true;
     }

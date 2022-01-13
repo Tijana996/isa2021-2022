@@ -1,10 +1,13 @@
 <mat-toolbar class="md-medium-tall" style="margin-top: 20px;" color="primary">
   <mat-toolbar-row>
+    <button mat-raised-button color="accent" [routerLink]="'/vikendice'"> Vikendice </button>
+    <button mat-raised-button color="accent" > Brodovi </button>
     <span class="menu-spacer"></span>
     <div>      
       <button mat-raised-button color="accent" *ngIf="!loggedIn()" [routerLink]="'/register'">Sign-up </button>
       <button mat-raised-button color="accent" *ngIf="!loggedIn()" [routerLink]="'/login'"> Log in </button>
       <button mat-raised-button color="accent" *ngIf="loggedIn()" (click)="logout()"> Log out </button>          
+      <button mat-raised-button color="accent" *ngIf="loggedIn()" [routerLink]="'/profile'"> Profil </button>          
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

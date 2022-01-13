@@ -107,6 +107,7 @@ public class AuthenticationController {
 
 
 
+
 //    @GetMapping("/registration-confirm/{token}")
 //    public ResponseEntity<?> confirmRegistration(@PathVariable("token") String token) throws URISyntaxException {
 //       HttpHeaders httpHeaders = new HttpHeaders();

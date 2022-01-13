@@ -1,68 +1,36 @@
-package com.ftn.ISA2122.model;
+package com.ftn.ISA2122.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import com.ftn.ISA2122.model.Slike;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "vikendica")
-public class Vikendica {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vikendica_generator")
-    @Column(name = "id", updatable = false, nullable = false)
+public class VikendicaDTO {
     private Long id;
-
-    @Column
+    
     private String naziv;
 
-    @Column
+     
     private String opis;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="id")
     private Set<Slike> slike;
 
-    @Column
     private int sobe;
 
-    @Column
     private int kreveti;
-
-    @Column
+     
     private String pravila;
 
-    @Column
     private int cenovnik;
 
-    @Column
     private int maxosoba;
 
-    @Column
     private String adresa;
 
-    @Column
     private int ocena;
 
-    public Vikendica(){}
-
-    public Vikendica(Long id, String naziv, String opis, Set<Slike> slike, int sobe, int kreveti, String pravila, int cenovnik, int maxosoba, String adresa, int ocena) {
+    public VikendicaDTO(Long id, String naziv, String opis, Set<Slike> slike, int sobe, int kreveti, String pravila, int cenovnik, int maxosoba, String adresa, int ocena) {
         this.id = id;
-        this.naziv = naziv;
-        this.opis = opis;
-        this.slike = slike;
-        this.sobe = sobe;
-        this.kreveti = kreveti;
-        this.pravila = pravila;
-        this.cenovnik = cenovnik;
-        this.maxosoba = maxosoba;
-        this.adresa = adresa;
-        this.ocena = ocena;
-    }
-
-    public Vikendica(String naziv, String opis, Set<Slike> slike, int sobe, int kreveti, String pravila, int cenovnik, int maxosoba, String adresa, int ocena) {
         this.naziv = naziv;
         this.opis = opis;
         this.slike = slike;

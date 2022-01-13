@@ -1,0 +1,29 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Adresa</th>
+            <th>Cenovnik</th>
+            <th>Broj kreveta</th>
+            <th>Max br osoba</th>
+            <th>Opis</th>
+            <th>Pravila</th>
+            <th>Ocena</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of vikendice" (click)="detalji(u.id)">
+            <td>{{u.id}}</td>
+            <td>{{u.naziv}}</td>
+            <td>{{u.adresa}}</td>
+            <td>{{u.cenovnik}}</td>
+            <td>{{u.kreveti}}</td>
+            <td>{{u.maxosoba}}</td>
+            <td>{{u.opis}}</td>
+            <td>{{u.pravila}}</td>
+            <td>{{u.ocena}}</td>
+        </tr>
+    </tbody>
+    
+  </table>

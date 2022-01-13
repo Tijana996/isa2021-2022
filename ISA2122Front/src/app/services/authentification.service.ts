@@ -12,7 +12,6 @@ export interface AuthResponseData {
   accessToken: string;
   expiresIn: string;
 }
-//ng serve --ssl --ssl-key C:\Users\Jovana\Desktop\SBNZ_2021\PreporukaOdevneKombinacijeFront\localhost.key --ssl-cert C:\Users\Jovana\Desktop\SBNZ_2021\PreporukaOdevneKombinacijeFront\localhost.crt
 export class User {
   constructor(
     private _token: string,
@@ -35,7 +34,7 @@ export class AuthentificationService {
   private readonly loginPath = 'http://localhost:8080/auth/login';
   private readonly registrationPath = 'http://localhost:8080/auth/sign-up';
   private readonly registerAdminPath = 'http://localhost:8080/auth/sign-up-admin';
-  private readonly usersPath = 'http://localhost:8080/patients';
+  private readonly usersPath = 'http://localhost:8080/user';
  
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 

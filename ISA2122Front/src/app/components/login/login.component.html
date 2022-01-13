@@ -2,9 +2,7 @@
     <div class="middle">
       <div class="inner">
         
-        <div *ngIf="isLoading" style="text-align: center;">
-          <app-loading-spinner></app-loading-spinner>
-        </div>
+        
         <div class="center myFonts">
           <h2>Log in</h2>
         <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">

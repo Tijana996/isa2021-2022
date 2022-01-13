@@ -1,0 +1,14 @@
+.full-width-input {
+    width: 100%;
+ }
+
+ mat-card {
+    width: 400px;
+    margin: 40px auto;
+    position: relative;
+    overflow: auto;
+
+    button {
+        float: right;
+    }
+ }

@@ -1,0 +1,65 @@
+<div class="dashboard-container">
+    <button mat-raised-button color="primary" routerLink="/"><span class="material-icons">keyboard_backspace</span> Back</button>
+    <mat-card>
+        <form [formGroup]="vikendicaForm" (ngSubmit)="onSubmit()">
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>Naziv: </label>
+                  <input matInput name="naziv" formControlName="naziv" readonly>
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>opis: </label>
+                  <input matInput name="opis" formControlName="opis" readonly>
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>sobe: </label>
+                  <input matInput name="sobe" formControlName="sobe" readonly>
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>kreveti: </label>
+                  <input matInput name="kreveti" formControlName="kreveti" readonly>
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>pravila: </label>
+                  <input matInput name="pravila" formControlName="pravila" readonly>
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>cenovnik: </label>
+                  <input matInput name="cenovnik" formControlName="cenovnik" readonly>
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>maxosoba: </label>
+                  <input matInput name="maxosoba" formControlName="maxosoba" readonly>
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>adresa: </label>
+                  <input matInput name="adresa" formControlName="adresa" readonly>
+                </mat-form-field>
+            </div>
+            <div fxLayout="column">
+                <mat-form-field class="full-width-input">
+                  <label>ocena: </label>
+                  <input matInput name="ocena" formControlName="ocena" readonly>
+                </mat-form-field>
+            </div>
+            
+        </form>
+        <div fxLayout="column" *ngFor = "let i of vikendica.slike">
+            <img src = "data:image/jpeg;base64,{{i.base64}}" height = "250px" width = "250px"/>
+        </div>
+    </mat-card>
+</div>

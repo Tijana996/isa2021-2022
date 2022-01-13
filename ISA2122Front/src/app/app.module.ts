@@ -20,13 +20,23 @@ import {MatSortModule} from '@angular/material/sort';
 import { AuthentificationService } from './services/authentification.service';
 import { JwtUtilsService } from './services/jwt-utils.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { VikendicePrikazComponent } from './components/vikendice-prikaz/vikendice-prikaz.component';
+import { BrodPrikazComponent } from './components/brod-prikaz/brod-prikaz.component';
+import { BrodProfilComponent } from './components/brod-profil/brod-profil.component';
+import { VikendicaProfilComponent } from './components/vikendica-profil/vikendica-profil.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    HomePageUserComponent
+    HomePageUserComponent,
+    UserProfileComponent,
+    VikendicePrikazComponent,
+    BrodPrikazComponent,
+    BrodProfilComponent,
+    VikendicaProfilComponent
   ],
   imports: [
     BrowserModule,

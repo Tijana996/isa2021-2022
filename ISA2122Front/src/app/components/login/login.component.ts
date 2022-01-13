@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(email, password).subscribe(
       resData => {
-        if(JSON.parse(localStorage.getItem('currentUser') || "")?.roles?.includes("ROLE_PACIJENT")){
+        //console.log(localStorage.getItem('currentUser'));
+        if(JSON.parse(localStorage.getItem('currentUser') || "")?.roles?.includes("ROLE_KLIJENT")){
+          //console.log(localStorage.getItem('currentUser'));
           this.router.navigate(['/home-page-user']); 
         }else{
           this.router.navigate(['/']); 
