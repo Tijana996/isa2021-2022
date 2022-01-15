@@ -15,7 +15,7 @@ public class ZahtevZaRegistracijuService implements ServiceInterface<ZahtevZaReg
 
     @Override
     public List<ZahtevZaRegistraciju> findAll() {
-        return null;
+        return repository.findAll();
     }
 
     @Override

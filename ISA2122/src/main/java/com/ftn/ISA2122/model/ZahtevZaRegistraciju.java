@@ -11,6 +11,9 @@ public class ZahtevZaRegistraciju {
     @Column(name="id", unique=true, nullable=false)
     private Long id;
 
+    @Column(name="obrazlozenje", unique=false, nullable=false)
+    private String obrazlozenje;
+
     @OneToOne(targetEntity = Korisnik.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = true, name = "korisnik_id")
     private Korisnik korisnik;
@@ -19,6 +22,12 @@ public class ZahtevZaRegistraciju {
 
     public ZahtevZaRegistraciju(Long id, Korisnik korisnik) {
         this.id = id;
+        this.korisnik = korisnik;
+    }
+
+    public ZahtevZaRegistraciju(Long id, String obrazlozenje, Korisnik korisnik) {
+        this.id = id;
+        this.obrazlozenje = obrazlozenje;
         this.korisnik = korisnik;
     }
 
@@ -36,5 +45,13 @@ public class ZahtevZaRegistraciju {
 
     public void setKorisnik(Korisnik korisnik) {
         this.korisnik = korisnik;
+    }
+
+    public String getObrazlozenje() {
+        return obrazlozenje;
+    }
+
+    public void setObrazlozenje(String obrazlozenje) {
+        this.obrazlozenje = obrazlozenje;
     }
 }

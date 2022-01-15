@@ -1,21 +1,19 @@
 package com.ftn.ISA2122.dto;
 
 import com.ftn.ISA2122.model.Korisnik;
-import com.ftn.ISA2122.model.TipKorisnika;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
 
-public class UserDTO {
+public class ZahtevZaRegistracijuDTO {
+
     @NotBlank
     @Email
     private String email;
 
     @NotBlank
-    @Size(min = 4, message = "Password must be at least 4 characters long")
-    private String password;
+    private String token;
 
     @NotBlank
     private String ime;
@@ -38,12 +36,21 @@ public class UserDTO {
     @NotBlank
     private String obrazlozenje;
 
-    @NotBlank
-    private TipKorisnika tipKorisnika;
+    public ZahtevZaRegistracijuDTO(Korisnik u, String obrazlozenje){
+        this.email = u.getEmail();
+        this.token = u.getToken().getToken();
+        this.ime = u.getIme();
+        this.prezime = u.getPrezime();
+        this.adresa = u.getAdresa();
+        this.grad = u.getGrad();
+        this.drzava = u.getDrzava();
+        this.broj = u.getBroj();
+        this.obrazlozenje = obrazlozenje;
+    }
 
-    public UserDTO(String email, String password, String ime, String prezime, String adresa, String grad, String drzava, String broj, String obrazlozenje, TipKorisnika tip_korisnika) {
+    public ZahtevZaRegistracijuDTO(String email, String token, String ime, String prezime, String adresa, String grad, String drzava, String broj, String obrazlozenje) {
         this.email = email;
-        this.password = password;
+        this.token = token;
         this.ime = ime;
         this.prezime = prezime;
         this.adresa = adresa;
@@ -51,29 +58,18 @@ public class UserDTO {
         this.drzava = drzava;
         this.broj = broj;
         this.obrazlozenje = obrazlozenje;
-        this.tipKorisnika = tip_korisnika;
     }
 
-    public UserDTO(Korisnik u){
-        this.email = u.getEmail();
-        this.password = u.getPassword();
-        this.ime = u.getIme();
-        this.prezime = u.getPrezime();
-        this.adresa = u.getAdresa();
-        this.grad = u.getGrad();
-        this.drzava = u.getDrzava();
-        this.broj = u.getBroj();
+    public ZahtevZaRegistracijuDTO() {
     }
 
-    public UserDTO(@NotBlank @Email String email, @NotBlank @Size(min = 4, message = "Password must be at least 4 characters long") String password) {
-        this.email = email;
-        this.password = password;
-
+    public String getObrazlozenje() {
+        return obrazlozenje;
     }
 
-
-
-    public UserDTO(){}
+    public void setObrazlozenje(String obrazlozenje) {
+        this.obrazlozenje = obrazlozenje;
+    }
 
     public String getEmail() {
         return email;
@@ -83,12 +79,12 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getToken() {
+        return token;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getIme() {
@@ -137,21 +133,5 @@ public class UserDTO {
 
     public void setBroj(String broj) {
         this.broj = broj;
-    }
-
-    public String getObrazlozenje() {
-        return obrazlozenje;
-    }
-
-    public void setObrazlozenje(String obrazlozenje) {
-        this.obrazlozenje = obrazlozenje;
-    }
-
-    public TipKorisnika getTipKorisnika() {
-        return tipKorisnika;
-    }
-
-    public void setTipKorisnika(TipKorisnika tipKorisnika) {
-        this.tipKorisnika = tipKorisnika;
     }
 }

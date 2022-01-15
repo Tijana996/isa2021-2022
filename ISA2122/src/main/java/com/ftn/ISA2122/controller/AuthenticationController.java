@@ -3,7 +3,10 @@ package com.ftn.ISA2122.controller;
 import com.ftn.ISA2122.dto.UserDTO;
 import com.ftn.ISA2122.dto.UserLoginDTO;
 import com.ftn.ISA2122.dto.UserTokenStateDTO;
+import com.ftn.ISA2122.dto.ZahtevZaRegistracijuDTO;
 import com.ftn.ISA2122.helper.UserRegMapper;
+import com.ftn.ISA2122.helper.ZahtevZaRegistracijuMapper;
+import com.ftn.ISA2122.model.Admin;
 import com.ftn.ISA2122.model.Klijent;
 import com.ftn.ISA2122.model.Korisnik;
 import com.ftn.ISA2122.model.ZahtevZaRegistraciju;
@@ -27,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,8 +54,11 @@ public class AuthenticationController {
 
     private UserRegMapper userMapper;
 
+    private ZahtevZaRegistracijuMapper zahtevZaRegistracijuMapper;
+
     public AuthenticationController() {
         this.userMapper = new UserRegMapper();
+        this.zahtevZaRegistracijuMapper = new ZahtevZaRegistracijuMapper();
     }
 
     @PostMapping("/login")
@@ -75,8 +83,7 @@ public class AuthenticationController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> registerUser(@RequestBody @Valid UserDTO userRequest, UriComponentsBuilder ucBuilder) throws Exception {
        try {
-           Klijent k = userMapper.toEntity(userRequest);
-           Korisnik user = userService.createKlijent(k);
+           Korisnik user = userService.createKorisnik(userMapper.toEntity(userRequest), userRequest.getTipKorisnika());
            ZahtevZaRegistraciju entity = new ZahtevZaRegistraciju();
            entity.setKorisnik(user);
            zahtevZaRegistracijuService.create(entity);
@@ -105,6 +112,46 @@ public class AuthenticationController {
         }
     }
 
+    @GetMapping("/registration-confirm-owners/{token}")
+    public ResponseEntity<?> confirmRegistrationOwners(@PathVariable("token") String token){
+        try {
+            userService.verifyRegistrationToken(token);
+            return new ResponseEntity<>("Korisnik je registrovan", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @GetMapping("/applications")
+    public ResponseEntity<?> getAllZahteviZaRegistraciju(){
+        try {
+            List<ZahtevZaRegistraciju> zahtevi = zahtevZaRegistracijuService.findAll();
+            return new ResponseEntity<>(getDTOList(zahtevi), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping ("/first-login-password")
+    public ResponseEntity<?> setChangedPasswordFirstLogin(@RequestBody String email, String password){
+        try {
+            Admin user = (Admin)userService.findByEmail(email);
+            user.setMenjanjeLozinke(false);
+            user.setLozinka(password);
+            userService.update(user, user.getId());
+            return new ResponseEntity<>("Uspesno promenjena lozinka!", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private List<ZahtevZaRegistracijuDTO> getDTOList(List<ZahtevZaRegistraciju> zahtevi) {
+        List<ZahtevZaRegistracijuDTO> list = new ArrayList<>();
+        for(ZahtevZaRegistraciju zahtev: zahtevi)
+            list.add(zahtevZaRegistracijuMapper.toDto(zahtev));
+        return list;
+    }
 
 
 

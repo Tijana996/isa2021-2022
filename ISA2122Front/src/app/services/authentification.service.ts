@@ -62,7 +62,7 @@ export class AuthentificationService {
       }))
       .pipe(catchError((error: any) => {
         if (error.status === 401) {
-          return throwError('Ilegal login');
+          return throwError('Illegal login');
         }
         else {
           return throwError('Server error');
