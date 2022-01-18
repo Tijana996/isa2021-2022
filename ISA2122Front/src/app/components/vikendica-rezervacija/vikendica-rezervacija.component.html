@@ -1,0 +1,27 @@
+<mat-card>
+    <mat-card-content>
+
+    <form class="reactiveForm" [formGroup] = "rezervacijaForm" (submit) = "onSubmit()">
+    <h2>Sign up</h2>
+        <div fxLayout="column">
+
+            <mat-form-field class="full-width-input">
+                <input matInput type="date" name="start" formControlName="start" readonly>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-input">
+                <input matInput type="date" [min]="datumod | date:'yyyy-MM-dd'" name="end" formControlName="end" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-input">
+                <input matInput type="number" name="brgostiju" formControlName="brgostiju" required>
+            </mat-form-field>
+
+        </div>
+        
+        <button mat-raised-button color="primary" id = "registerBtn" [disabled] = "rezervacijaForm.invalid">Rezervacija</button>
+          
+    </form>
+
+    </mat-card-content>
+</mat-card>

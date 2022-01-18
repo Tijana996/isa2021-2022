@@ -1,5 +1,6 @@
 package com.ftn.ISA2122.controller;
 
+import com.ftn.ISA2122.dto.SearchVikDTO;
 import com.ftn.ISA2122.dto.UserLoginDTO;
 import com.ftn.ISA2122.dto.UserTokenStateDTO;
 import com.ftn.ISA2122.dto.VikendicaDTO;
@@ -43,7 +44,6 @@ public class VikendicaController {
         for (Vikendica vik: vikendice) {
             vikendicaDTOS.add(vikendicaMapper.toDto(vik));
         }
-        //new ResponseEntity<>(getDTOList(apoteke), HttpStatus.OK);
         return new ResponseEntity<>(vikendicaDTOS, HttpStatus.OK);
     }
 
@@ -51,7 +51,8 @@ public class VikendicaController {
     public ResponseEntity<?> getVikendica(@PathVariable("id") Long id) {
 
         //new ResponseEntity<>(getDTOList(apoteke), HttpStatus.OK);
-        return ResponseEntity.ok(vikendicaMapper.toDto(vikendicaService.findOne(id)));
+        Vikendica v = vikendicaService.findOne(id);
+        return ResponseEntity.ok(vikendicaMapper.toDto(v));
     }
 
     @GetMapping("/slike/{id}")
@@ -63,5 +64,20 @@ public class VikendicaController {
         for(Slike s : v.getSlike())
             slike.add(s.getBase64());
         return ResponseEntity.ok(slike);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<?> searchVikendica(@RequestBody String search){
+        try {
+            SearchVikDTO searchVikDTO = new SearchVikDTO(search);
+            List<Vikendica> vikendice = vikendicaService.search(searchVikDTO.getDateod(), searchVikDTO.getDatedo(), searchVikDTO.getLokacija(), searchVikDTO.getOcena());
+            List<VikendicaDTO> vikendicaDTOS = new ArrayList<>();
+            for (Vikendica vik: vikendice) {
+                vikendicaDTOS.add(vikendicaMapper.toDto(vik));
+            }
+            return new ResponseEntity<>(vikendicaDTOS, HttpStatus.OK);
+        } catch(Exception ex){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

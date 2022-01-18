@@ -25,6 +25,9 @@ import { VikendicePrikazComponent } from './components/vikendice-prikaz/vikendic
 import { BrodPrikazComponent } from './components/brod-prikaz/brod-prikaz.component';
 import { BrodProfilComponent } from './components/brod-profil/brod-profil.component';
 import { VikendicaProfilComponent } from './components/vikendica-profil/vikendica-profil.component';
+import { VikendicaRezervacijaComponent } from './components/vikendica-rezervacija/vikendica-rezervacija.component';
+import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
+import { BrzeRezervacijeComponent } from './components/brze-rezervacije/brze-rezervacije.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { VikendicaProfilComponent } from './components/vikendica-profil/vikendic
     VikendicePrikazComponent,
     BrodPrikazComponent,
     BrodProfilComponent,
-    VikendicaProfilComponent
+    VikendicaProfilComponent,
+    VikendicaRezervacijaComponent,
+    RezervacijeComponent,
+    BrzeRezervacijeComponent
   ],
   imports: [
     BrowserModule,

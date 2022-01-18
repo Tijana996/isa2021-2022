@@ -3,6 +3,8 @@ package com.ftn.ISA2122.model;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("IP")
@@ -14,6 +16,9 @@ public class InstruktorPecanja extends Korisnik {
     @Column
     private int ocena;
 
+    @OneToMany(mappedBy="id")
+    private Set<Rezervacija> rezervacije;
+
     public InstruktorPecanja(){}
 
     public InstruktorPecanja(String email, String lozinka, String ime, String prezime, String adresa, String grad, String drzava, String broj, int poeni, int kategorija, int penali, boolean enabled) {
@@ -24,6 +29,13 @@ public class InstruktorPecanja extends Korisnik {
         super(email, lozinka, ime, prezime, adresa, grad, drzava, broj, poeni, kategorija, penali, enabled);
         this.lokacija = lokacija;
         this.ocena = ocena;
+    }
+
+    public InstruktorPecanja(String email, String lozinka, String ime, String prezime, String adresa, String grad, String drzava, String broj, int poeni, int kategorija, int penali, boolean enabled, String lokacija, int ocena, Set<Rezervacija> rezervacije) {
+        super(email, lozinka, ime, prezime, adresa, grad, drzava, broj, poeni, kategorija, penali, enabled);
+        this.lokacija = lokacija;
+        this.ocena = ocena;
+        this.rezervacije = rezervacije;
     }
 
     public String getLokacija() {
@@ -41,4 +53,13 @@ public class InstruktorPecanja extends Korisnik {
     public void setOcena(int ocena) {
         this.ocena = ocena;
     }
+
+    public Set<Rezervacija> getRezervacije() {
+        return rezervacije;
+    }
+
+    public void setRezervacije(Set<Rezervacija> rezervacije) {
+        this.rezervacije = rezervacije;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.ftn.ISA2122.dto;
 
+import com.ftn.ISA2122.model.Rezervacija;
 import com.ftn.ISA2122.model.Slike;
 
 import javax.persistence.*;
@@ -9,11 +10,10 @@ public class VikendicaDTO {
     private Long id;
     
     private String naziv;
-
      
     private String opis;
 
-    private Set<Slike> slike;
+    private Set<String> slike;
 
     private int sobe;
 
@@ -29,7 +29,9 @@ public class VikendicaDTO {
 
     private int ocena;
 
-    public VikendicaDTO(Long id, String naziv, String opis, Set<Slike> slike, int sobe, int kreveti, String pravila, int cenovnik, int maxosoba, String adresa, int ocena) {
+    private Set<RezervacijaDTO> rezervacije;
+
+    public VikendicaDTO(Long id, String naziv, String opis, Set<String> slike, int sobe, int kreveti, String pravila, int cenovnik, int maxosoba, String adresa, int ocena, Set<RezervacijaDTO> rezervacije) {
         this.id = id;
         this.naziv = naziv;
         this.opis = opis;
@@ -41,6 +43,7 @@ public class VikendicaDTO {
         this.maxosoba = maxosoba;
         this.adresa = adresa;
         this.ocena = ocena;
+        this.rezervacije = rezervacije;
     }
 
     public Long getId() {
@@ -67,11 +70,11 @@ public class VikendicaDTO {
         this.opis = opis;
     }
 
-    public Set<Slike> getSlike() {
+    public Set<String> getSlike() {
         return slike;
     }
 
-    public void setSlike(Set<Slike> slike) {
+    public void setSlike(Set<String> slike) {
         this.slike = slike;
     }
 
@@ -129,5 +132,13 @@ public class VikendicaDTO {
 
     public void setOcena(int ocena) {
         this.ocena = ocena;
+    }
+
+    public Set<RezervacijaDTO> getRezervacije() {
+        return rezervacije;
+    }
+
+    public void setRezervacije(Set<RezervacijaDTO> rezervacije) {
+        this.rezervacije = rezervacije;
     }
 }

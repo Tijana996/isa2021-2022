@@ -55,4 +55,16 @@ export class VikendicaService {
 
     return this.http.get<any>( this.newsPath+'/slike/1', httpOptions);
   }
+
+  getVikendiceSearch(s1,s2,s3,s4): Observable<any>{
+    let httpOptions = {};
+
+    httpOptions = {
+        headers: this.headers,
+        observe: 'body',
+        //data : search
+    };
+
+    return this.http.post<any>( this.newsPath+'/search/',JSON.stringify({ s1,s2,s3,s4 }), httpOptions);
+  }
 }

@@ -21,8 +21,8 @@ public class Vikendica {
     @Column
     private String opis;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="id")
+    //@JsonIgnore
+    @OneToMany(mappedBy="vikendica")
     private Set<Slike> slike;
 
     @Column
@@ -45,6 +45,10 @@ public class Vikendica {
 
     @Column
     private int ocena;
+
+    //@JsonIgnore
+    @OneToMany(mappedBy="vikendice")
+    private Set<Rezervacija> rezervacije;
 
     public Vikendica(){}
 
@@ -73,6 +77,21 @@ public class Vikendica {
         this.maxosoba = maxosoba;
         this.adresa = adresa;
         this.ocena = ocena;
+    }
+
+    public Vikendica(Long id, String naziv, String opis, Set<Slike> slike, int sobe, int kreveti, String pravila, int cenovnik, int maxosoba, String adresa, int ocena, Set<Rezervacija> rezervacije) {
+        this.id = id;
+        this.naziv = naziv;
+        this.opis = opis;
+        this.slike = slike;
+        this.sobe = sobe;
+        this.kreveti = kreveti;
+        this.pravila = pravila;
+        this.cenovnik = cenovnik;
+        this.maxosoba = maxosoba;
+        this.adresa = adresa;
+        this.ocena = ocena;
+        this.rezervacije = rezervacije;
     }
 
     public Long getId() {
@@ -161,5 +180,13 @@ public class Vikendica {
 
     public void setOcena(int ocena) {
         this.ocena = ocena;
+    }
+
+    public Set<Rezervacija> getRezervacije() {
+        return rezervacije;
+    }
+
+    public void setRezervacije(Set<Rezervacija> rezervacije) {
+        this.rezervacije = rezervacije;
     }
 }

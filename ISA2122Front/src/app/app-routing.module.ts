@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BrzeRezervacijeComponent } from './components/brze-rezervacije/brze-rezervacije.component';
 import { HomePageUserComponent } from './components/home-page-user/home-page-user.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { VikendicaProfilComponent } from './components/vikendica-profil/vikendica-profil.component';
+import { VikendicaRezervacijaComponent } from './components/vikendica-rezervacija/vikendica-rezervacija.component';
 import { VikendicePrikazComponent } from './components/vikendice-prikaz/vikendice-prikaz.component';
 
 const routes: Routes = [
@@ -13,7 +16,11 @@ const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'vikendice', component: VikendicePrikazComponent },
-  { path: 'vikendica/:id', component : VikendicaProfilComponent}
+  { path: 'vikendica/:id', component : VikendicaProfilComponent},
+  { path: 'rezervacija/:id/:datum', component: VikendicaRezervacijaComponent },
+  { path: 'rezervacije', component: RezervacijeComponent },
+  { path: 'brzerezervacije', component: BrzeRezervacijeComponent },
+
 ];
 
 @NgModule({

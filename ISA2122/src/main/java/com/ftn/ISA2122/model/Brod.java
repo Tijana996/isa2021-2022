@@ -54,6 +54,9 @@ public class Brod {
     @Column
     private int usloviOtkaza; // 0 besplatno 1 zadrzava procenat
 
+    @OneToMany(mappedBy="id")
+    private Set<Rezervacija> rezervacije;
+
     public Brod (){}
 
     public Brod(Long id, String naziv, String opis, Set<Slike> slike, String pravila, int cenovnik, String adresa, String tip, int duzina, int brojmotora, int snaga, int maxBrzina, int kapacitet, String oprema, int usloviOtkaza) {
@@ -89,6 +92,25 @@ public class Brod {
         this.kapacitet = kapacitet;
         this.oprema = oprema;
         this.usloviOtkaza = usloviOtkaza;
+    }
+
+    public Brod(Long id, String naziv, String opis, Set<Slike> slike, String pravila, int cenovnik, String adresa, String tip, int duzina, int brojmotora, int snaga, int maxBrzina, int kapacitet, String oprema, int usloviOtkaza, Set<Rezervacija> rezervacije) {
+        this.id = id;
+        this.naziv = naziv;
+        this.opis = opis;
+        this.slike = slike;
+        this.pravila = pravila;
+        this.cenovnik = cenovnik;
+        this.adresa = adresa;
+        this.tip = tip;
+        this.duzina = duzina;
+        this.brojmotora = brojmotora;
+        this.snaga = snaga;
+        this.maxBrzina = maxBrzina;
+        this.kapacitet = kapacitet;
+        this.oprema = oprema;
+        this.usloviOtkaza = usloviOtkaza;
+        this.rezervacije = rezervacije;
     }
 
     public Long getId() {
@@ -209,5 +231,13 @@ public class Brod {
 
     public void setUsloviOtkaza(int usloviOtkaza) {
         this.usloviOtkaza = usloviOtkaza;
+    }
+
+    public Set<Rezervacija> getRezervacije() {
+        return rezervacije;
+    }
+
+    public void setRezervacije(Set<Rezervacija> rezervacije) {
+        this.rezervacije = rezervacije;
     }
 }

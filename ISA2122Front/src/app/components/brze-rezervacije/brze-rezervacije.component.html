@@ -1,0 +1,21 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Datum od</th>
+            <th>Datum do</th>
+            <th>Broj dana</th>
+            <th>Broj gostiju</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of rezervacije">
+            <td>{{u.id}}</td>
+            <td>{{u.start}}</td>
+            <td>{{u.end}}</td>
+            <td>{{u.brdana}}</td>
+            <td>{{u.brgostiju}}</td>
+        </tr>
+    </tbody>
+    
+  </table>

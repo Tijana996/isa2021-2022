@@ -13,11 +13,11 @@ public class Slike {
     @Column(length=100000)
     private String base64;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="vikendica_id", nullable=true)
     private Vikendica vikendica;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="brod_id", nullable=true)
     private Brod brod;
 
