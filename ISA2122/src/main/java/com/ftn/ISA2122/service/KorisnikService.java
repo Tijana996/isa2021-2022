@@ -91,44 +91,48 @@ public class KorisnikService implements ServiceInterface<Korisnik> {
 		entity.setLozinka(passwordEncoder.encode(entity.getLozinka()));
 		entity.setEnabled(false);
 		if (tip.equals(TipKorisnika.KLIJENT)){
+			Klijent k = new Klijent(entity);
 			Authority authority =  authorityRepository.findByName("ROLE_KLIJENT");
-			setAuths(authority, entity);
-			return klijentRepository.save(new Klijent(entity));
+			setAuths(authority, k);
+			return klijentRepository.save(k);
 		}
 		else if (tip.equals(TipKorisnika.INSTRUKTOR)){
-			Authority authority =  authorityRepository.findByName("ROLE_INSTRUKTOR");
-			List<Authority> authorities = new ArrayList<>();
-			setAuths(authority, entity);
-
 			InstruktorPecanja instruktorPecanja = new InstruktorPecanja(entity);
 			instruktorPecanja.setLokacija("lokacija");
 			instruktorPecanja.setOcena(0);
 
+			Authority authority =  authorityRepository.findByName("ROLE_INSTRUKTOR");
+			setAuths(authority, instruktorPecanja);
+
 			return instruktorPecanjaRepository.save(instruktorPecanja);
 		}
 		else if (tip.equals(TipKorisnika.VLASNIKBRODA)){
-			Authority authority =  authorityRepository.findByName("ROLE_BROD");
-			setAuths(authority, entity);
-
 			VlasnikBroda vlasnikBroda = new VlasnikBroda(entity);
 			vlasnikBroda.setBrodovi(new HashSet<>());
+
+			Authority authority =  authorityRepository.findByName("ROLE_BROD");
+			setAuths(authority, vlasnikBroda);
+
 			return vlasnikBrodaRepository.save(vlasnikBroda);
 		}
 		else if (tip.equals(TipKorisnika.VLASNIKVIKENDICE)){
-			Authority authority =  authorityRepository.findByName("ROLE_VIKENDICA");
-			setAuths(authority, entity);
-
 			VlasnikVikendice vlasnikVikendice = new VlasnikVikendice(entity);
 			vlasnikVikendice.setVikendice(new HashSet<>());
+
+			Authority authority =  authorityRepository.findByName("ROLE_VIKENDICA");
+			setAuths(authority, vlasnikVikendice);
+
 			return vlasnikVikendiceRepository.save(vlasnikVikendice);
 		}
 		else {
-			Authority authority =  authorityRepository.findByName("ROLE_ADMIN");
-			setAuths(authority, entity);
-
 			Admin admin = new Admin(entity);
+			admin.setEnabled(true);
 			admin.setPredefinisan(false);
 			admin.setMenjanjeLozinke(true);
+
+			Authority authority =  authorityRepository.findByName("ROLE_ADMIN");
+			setAuths(authority, admin);
+
 			return adminRepository.save(admin);
 		}
 

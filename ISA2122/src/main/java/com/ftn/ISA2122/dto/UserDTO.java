@@ -35,7 +35,6 @@ public class UserDTO {
     @NotBlank
     private String broj;
 
-    @NotBlank
     private String obrazlozenje;
 
     private TipKorisnika tipKorisnika;

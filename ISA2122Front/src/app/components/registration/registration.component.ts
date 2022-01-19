@@ -87,7 +87,7 @@ export class RegistrationComponent implements OnInit {
         this.user.obrazlozenje = this.registrationForm.controls['obrazlozenje'].value;
       }
       else{
-        this.user.obrazlozenje = ' ';
+        this.user.obrazlozenje = null;
       }
 
       console.log(this.user);

@@ -109,6 +109,18 @@ public class AuthenticationController {
        }
     }
 
+    @PostMapping("/sign-up-admin")
+    public ResponseEntity<?> registerAdmin(@RequestBody @Valid UserDTO userRequest, UriComponentsBuilder ucBuilder) throws Exception {
+        try {
+            Korisnik user = userService.createKorisnik(userMapper.toEntity(userRequest), userRequest.getTipKorisnika());
+
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/registration-confirm/{token}")
     public ResponseEntity<?> confirmRegistration(@PathVariable("token") String token) throws URISyntaxException {
         HttpHeaders httpHeaders = new HttpHeaders();

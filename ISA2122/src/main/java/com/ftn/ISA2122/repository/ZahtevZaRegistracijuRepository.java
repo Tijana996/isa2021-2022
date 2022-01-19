@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ZahtevZaRegistracijuRepository extends JpaRepository<ZahtevZaRegistraciju, Long> {
 
-    List<ZahtevZaRegistraciju> findAllByObrazlozenjeNotLike(String obrazlozenje);
+    List<ZahtevZaRegistraciju> findAllByObrazlozenjeNotNull();
 
     ZahtevZaRegistraciju findByKorisnik(Korisnik k);
 }

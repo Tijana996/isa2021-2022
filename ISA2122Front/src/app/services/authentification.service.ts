@@ -111,6 +111,19 @@ export class AuthentificationService {
     }
   }
 
+  signupAdmin(user : UserReg) : Observable<User> {
+    let httpOptions = {};
+
+		httpOptions = {
+			headers: this.headers,
+			observe: 'body'
+    	};
+    
+		return this.http.post<User>(
+			this.registerAdminPath, user,
+			httpOptions);		
+  }
+
   getUser() : Observable<User> {
     let httpOptions = {};
     let id = JSON.parse(localStorage.getItem('currentUser') || "")?.id;

@@ -11,7 +11,7 @@ public class ZahtevZaRegistraciju {
     @Column(name="id", unique=true, nullable=false)
     private Long id;
 
-    @Column(name="obrazlozenje", unique=false, nullable=false)
+    @Column(name="obrazlozenje", unique=false, nullable=true)
     private String obrazlozenje;
 
     @OneToOne(targetEntity = Korisnik.class, fetch = FetchType.EAGER)

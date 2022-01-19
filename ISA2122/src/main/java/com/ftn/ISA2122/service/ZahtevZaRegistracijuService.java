@@ -19,7 +19,7 @@ public class ZahtevZaRegistracijuService implements ServiceInterface<ZahtevZaReg
         return repository.findAll();
     }
 
-    public List<ZahtevZaRegistraciju> findAllExceptKlijenti() { return repository.findAllByObrazlozenjeNotLike(" ");}
+    public List<ZahtevZaRegistraciju> findAllExceptKlijenti() { return repository.findAllByObrazlozenjeNotNull();}
 
     @Override
     public ZahtevZaRegistraciju findOne(Long id) {
