@@ -28,4 +28,16 @@ export class BrzeRezervacijeComponent implements OnInit {
     );
     
   }
+
+  rezervisi(idrez):void{
+    this.service.rezervisi(idrez).subscribe(
+      result => {
+        console.log(result.body);
+        this.rezervacije = result.body;
+      },
+      error => {
+        //console.log(error);
+      }
+    );
+  }
 }

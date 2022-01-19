@@ -31,7 +31,7 @@ public class RezervacijaService implements ServiceInterface<Rezervacija>{
 
     @Override
     public Rezervacija findOne(Long id) {
-        return null;
+        return rezervacijaRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -51,7 +51,12 @@ public class RezervacijaService implements ServiceInterface<Rezervacija>{
 
     @Override
     public Rezervacija update(Rezervacija entity, Long id) throws Exception {
-        return null;
+        Klijent k = (Klijent) korisnikRepository.findById(entity.getKlijenti().getId()).orElse(null);
+        Set<Rezervacija> rezervacije = k.getRezervacije();
+        rezervacije.add(entity);
+        k.setRezervacije(rezervacije);
+        korisnikRepository.save(k);
+        return rezervacijaRepository.save(entity);
     }
 
     @Override

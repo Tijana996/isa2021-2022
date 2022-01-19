@@ -11,9 +11,11 @@ import com.ftn.ISA2122.service.KorisnikService;
 import com.ftn.ISA2122.service.RezervacijaService;
 import com.ftn.ISA2122.service.VikendicaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
@@ -59,6 +61,7 @@ public class RezervacijaController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_KLIJENT')")
     public ResponseEntity<?> getRezervacije(@PathVariable("id") Long id) {
         List<Rezervacija> rezervacije = rezervacijaService.findAll();
         List<RezervacijaDTO> rezervacijaDTOS = new ArrayList<>();
@@ -69,5 +72,14 @@ public class RezervacijaController {
                 rezervacijaDTOS.add(rezervacijaMapper.toDto(rez));
         }
         return new ResponseEntity<>(rezervacijaDTOS, HttpStatus.OK);
+    }
+
+    @PutMapping("/{korisnik}/{id}")
+    public ResponseEntity<?> rezervisiBrzu(@PathVariable("korisnik") Long klijent_id, @PathVariable("id") Long rez_id) throws Exception {
+        Klijent k = (Klijent) korisnikService.findOne(klijent_id);
+        Rezervacija r = rezervacijaService.findOne(rez_id);
+        r.setKlijenti(k);
+        rezervacijaService.update(r,rez_id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

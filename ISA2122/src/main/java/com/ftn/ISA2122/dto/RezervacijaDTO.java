@@ -15,6 +15,8 @@ public class RezervacijaDTO {
     private int brgostiju;
     private Long klijenti;
     private Long vikendice;
+    private Long brodovi;
+
 
     public RezervacijaDTO(){}
 
@@ -27,7 +29,7 @@ public class RezervacijaDTO {
         this.klijenti = klijenti;
     }
 
-    public RezervacijaDTO(Long id, String start, String end, int brdana, int brgostiju, Long klijenti, Long vikendice) {
+    public RezervacijaDTO(Long id, String start, String end, int brdana, int brgostiju, Long klijenti, Long vikendice, Long brodovi) {
         this.id = id;
         this.start = start;
         this.end = end;
@@ -35,6 +37,7 @@ public class RezervacijaDTO {
         this.brgostiju = brgostiju;
         this.klijenti = klijenti;
         this.vikendice = vikendice;
+        this.brodovi = brodovi;
     }
 
     public Long getId() {
@@ -91,5 +94,13 @@ public class RezervacijaDTO {
 
     public void setVikendice(Long vikendice) {
         this.vikendice = vikendice;
+    }
+
+    public Long getBrodovi() {
+        return brodovi;
+    }
+
+    public void setBrodovi(Long brodovi) {
+        this.brodovi = brodovi;
     }
 }

@@ -44,5 +44,21 @@ export class RezervacijaService {
 		console.log(ind);
 		return this.http.get<any>( this.newsPath+'/'+ind, httpOptions);
 	}
+
+	rezervisi(id):Observable<any>{
+		let httpOptions = {};
+  
+		httpOptions = {
+			headers: this.headers,
+			observe: 'response',
+  
+		};
+  
+		var currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+		var ind = currentUser.id
+		console.log(ind);
+		return this.http.put<any>( this.newsPath+'/'+ind+'/'+id, httpOptions);
+	}
   
 }
