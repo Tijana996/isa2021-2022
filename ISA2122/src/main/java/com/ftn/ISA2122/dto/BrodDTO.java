@@ -1,104 +1,33 @@
-package com.ftn.ISA2122.model;
+package com.ftn.ISA2122.dto;
 
-import javax.persistence.*;
+import com.ftn.ISA2122.model.Slike;
+
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
-@Entity
-@Table(name = "brod")
-public class Brod {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "brod_generator")
-    @Column(name = "id", updatable = false, nullable = false)
+public class BrodDTO {
     private Long id;
-
-    @Column
     private String naziv;
-
-    @Column
     private String opis;
-
-    @OneToMany(mappedBy="brod")
-    private Set<Slike> slike;
-
-    @Column
+    private Set<String> slike;
     private String pravila;
-
-    @Column
     private int cenovnik;
-
-    @Column
     private String adresa;
-
-    @Column
     private String tip;
-
-    @Column
     private int duzina;
-
-    @Column
     private int brojmotora;
-
-    @Column
     private int snaga;
-
-    @Column
     private int maxBrzina;
-
-    @Column
     private int kapacitet;
-
-    @Column
     private String oprema;
-
-    @Column
-    private int usloviOtkaza; // 0 besplatno 1 zadrzava procenat
-
-    @OneToMany(mappedBy="brodovi")
-    private Set<Rezervacija> rezervacije;
-
-    @Column
+    private String usloviOtkaza;
+    private Set<RezervacijaDTO> rezervacije;
     private int ocena;
 
-    public Brod (){}
+    public BrodDTO(){}
 
-    public Brod(Long id, String naziv, String opis, Set<Slike> slike, String pravila, int cenovnik, String adresa, String tip, int duzina, int brojmotora, int snaga, int maxBrzina, int kapacitet, String oprema, int usloviOtkaza, int ocena) {
-        this.id = id;
-        this.naziv = naziv;
-        this.opis = opis;
-        this.slike = slike;
-        this.pravila = pravila;
-        this.cenovnik = cenovnik;
-        this.adresa = adresa;
-        this.tip = tip;
-        this.duzina = duzina;
-        this.brojmotora = brojmotora;
-        this.snaga = snaga;
-        this.maxBrzina = maxBrzina;
-        this.kapacitet = kapacitet;
-        this.oprema = oprema;
-        this.usloviOtkaza = usloviOtkaza;
-        this.ocena = ocena;
-    }
-
-    public Brod(String naziv, String opis, Set<Slike> slike, String pravila, int cenovnik, String adresa, String tip, int duzina, int brojmotora, int snaga, int maxBrzina, int kapacitet, String oprema, int usloviOtkaza) {
-        this.naziv = naziv;
-        this.opis = opis;
-        this.slike = slike;
-        this.pravila = pravila;
-        this.cenovnik = cenovnik;
-        this.adresa = adresa;
-        this.tip = tip;
-        this.duzina = duzina;
-        this.brojmotora = brojmotora;
-        this.snaga = snaga;
-        this.maxBrzina = maxBrzina;
-        this.kapacitet = kapacitet;
-        this.oprema = oprema;
-        this.usloviOtkaza = usloviOtkaza;
-    }
-
-    public Brod(Long id, String naziv, String opis, Set<Slike> slike, String pravila, int cenovnik, String adresa, String tip, int duzina, int brojmotora, int snaga, int maxBrzina, int kapacitet, String oprema, int usloviOtkaza, Set<Rezervacija> rezervacije) {
+    public BrodDTO(Long id, String naziv, String opis, Set<String> slike, String pravila, int cenovnik, String adresa, String tip, int duzina, int brojmotora, int snaga, int maxBrzina, int kapacitet, String oprema, String usloviOtkaza, Set<RezervacijaDTO> rezervacije, int ocena) {
         this.id = id;
         this.naziv = naziv;
         this.opis = opis;
@@ -115,6 +44,7 @@ public class Brod {
         this.oprema = oprema;
         this.usloviOtkaza = usloviOtkaza;
         this.rezervacije = rezervacije;
+        this.ocena = ocena;
     }
 
     public Long getId() {
@@ -141,11 +71,11 @@ public class Brod {
         this.opis = opis;
     }
 
-    public Set<Slike> getSlike() {
+    public Set<String> getSlike() {
         return slike;
     }
 
-    public void setSlike(Set<Slike> slike) {
+    public void setSlike(Set<String> slike) {
         this.slike = slike;
     }
 
@@ -229,27 +159,19 @@ public class Brod {
         this.oprema = oprema;
     }
 
-    public int getUsloviOtkaza() {
+    public String getUsloviOtkaza() {
         return usloviOtkaza;
     }
 
-    public void setUsloviOtkaza(int usloviOtkaza) {
+    public void setUsloviOtkaza(String usloviOtkaza) {
         this.usloviOtkaza = usloviOtkaza;
     }
 
-    public Set<Rezervacija> getRezervacije() {
+    public Set<RezervacijaDTO> getRezervacije() {
         return rezervacije;
     }
 
-    public void setRezervacije(Set<Rezervacija> rezervacije) {
+    public void setRezervacije(Set<RezervacijaDTO> rezervacije) {
         this.rezervacije = rezervacije;
-    }
-
-    public int getOcena() {
-        return ocena;
-    }
-
-    public void setOcena(int ocena) {
-        this.ocena = ocena;
     }
 }

@@ -1,1 +1,101 @@
-<p>brod-prikaz works!</p>
+<br><br>
+<input matInput type="text" placeholder="Filter" (input)="onSearchChange($event.target.value)"/>
+<br>
+
+<form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+    <mat-label>Datum od</mat-label>
+    <mat-form-field  appearance="fill" color="accent">
+      <input matInput 
+        type="date"
+        id="dateod"
+        class="form-control"
+        ngModel
+        name="dateod"
+        (input)="setDatum($event.target.value)"
+      />
+    </mat-form-field><br>
+    <mat-label>Datum do</mat-label>
+    <mat-form-field  appearance="fill" color="accent">
+        <input matInput 
+          type="date"
+          id="datedo"
+          class="form-control"
+          ngModel
+          name="datedo"
+        />
+      </mat-form-field><br>
+      <mat-label>Lokacija</mat-label>
+    <mat-form-field appearance="fill" color="accent">
+      <input matInput
+        type="text"
+        id="lokacija"
+        class="form-control"
+        ngModel
+        name="lokacija"
+      />
+    </mat-form-field><br>
+    <mat-label>Ocena</mat-label>
+    <mat-form-field appearance="fill" color="accent">
+        <input matInput
+          type="number"
+          id="ocena"
+          class="form-control"
+          ngModel
+          name="ocena"
+          min = "1" max = "5"
+        />
+      </mat-form-field>
+    <div>
+      <button
+        mat-raised-button color="primary"
+        type="submit">
+        Search
+      </button>
+    </div>
+  </form>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Adresa</th>
+            <th>Cenovnik</th>
+            <th>Broj kreveta</th>
+            <th>Max br osoba</th>
+            <th>Opis</th>
+            <th>Pravila</th>
+            <th>Ocena</th>
+            <th>Tip</th>
+            <th>Duzina</th>
+            <th>Br motora</th>
+            <th>Snaga</th>
+            <th>Max brzina</th>
+            <th>Kapacitet</th>
+            <th>Oprema</th>
+            <th>Uslovi otkaza</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of brodovi">
+            <td (click)="detalji(u.id)">{{u.id}}</td>
+            <td>{{u.naziv}}</td>
+            <td>{{u.adresa}}</td>
+            <td>{{u.cenovnik}}</td>
+            <td>{{u.kreveti}}</td>
+            <td>{{u.maxosoba}}</td>
+            <td>{{u.opis}}</td>
+            <td>{{u.pravila}}</td>
+            <td>{{u.ocena}}</td>
+            <td>{{u.tip}}</td>
+            <td>{{u.duzina}}</td>
+            <td>{{u.brojmotora}}</td>
+            <td>{{u.snaga}}</td>
+            <td>{{u.maxBrzina}}</td>
+            <td>{{u.kapacitet}}</td>
+            <td>{{u.oprema}}</td>
+            <td>{{u.usloviOtkaza}}</td>
+            <td><input type = "button" (click)="rezervisi(u.id)" value = "rezervisi"/></td>
+        </tr>
+    </tbody>
+    
+  </table>

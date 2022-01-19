@@ -21,8 +21,8 @@ public class RezervacijaMapper implements MapperInterface<Rezervacija, Rezervaci
 
     @Override
     public RezervacijaDTO toDto(Rezervacija entity) {
-        if(entity.getKlijenti()==null)
-            return new RezervacijaDTO(entity.getId(), entity.getStart(), entity.getEnd(), entity.getBrdana(), entity.getBrgostiju(), null, entity.getVikendice().getId());
-        return new RezervacijaDTO(entity.getId(), entity.getStart(), entity.getEnd(), entity.getBrdana(), entity.getBrgostiju(), entity.getKlijenti().getId(), entity.getVikendice().getId());
+        return new RezervacijaDTO(entity.getId(), entity.getStart(), entity.getEnd(), entity.getBrdana(),
+                entity.getBrgostiju(), entity.getKlijenti()==null ? null : entity.getKlijenti().getId(),
+                entity.getVikendice()==null? null : entity.getVikendice().getId(), entity.getBrodovi()==null? null : entity.getBrodovi().getId());
     }
 }
