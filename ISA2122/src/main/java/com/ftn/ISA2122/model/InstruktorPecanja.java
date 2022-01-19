@@ -38,6 +38,10 @@ public class InstruktorPecanja extends Korisnik {
         this.rezervacije = rezervacije;
     }
 
+    public InstruktorPecanja(Korisnik entity) {
+        super(entity.getEmail(), entity.getLozinka(), entity.getIme(), entity.getPrezime(), entity.getAdresa(), entity.getGrad(), entity.getDrzava(), entity.getBroj(), entity.getPoeni(), entity.getKategorija(), entity.getPenali(), entity.isEnabled());
+    }
+
     public String getLokacija() {
         return lokacija;
     }

@@ -34,6 +34,9 @@ export class AuthentificationService {
   private readonly loginPath = 'http://localhost:8080/auth/login';
   private readonly registrationPath = 'http://localhost:8080/auth/sign-up';
   private readonly registerAdminPath = 'http://localhost:8080/auth/sign-up-admin';
+  private readonly checkPredefinedPath = 'http://localhost:8080/auth/predefined';
+  private readonly confirmRegistrationPath = 'http://localhost:8080/auth/registration-confirm-owners';
+  private readonly rejectRegistrationPath = 'http://localhost:8080/auth/registration-reject-owners';
   private readonly usersPath = 'http://localhost:8080/user';
  
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
@@ -132,6 +135,46 @@ export class AuthentificationService {
     
 		return this.http.get<User>(
 			this.usersPath + `/profile/${email}`,
+			httpOptions);		
+  }
+
+  checkIfPredefinisan() : Observable<boolean> {
+    let httpOptions = {};
+    let id = JSON.parse(localStorage.getItem('currentUser') || "")?.id;
+		httpOptions = {
+			headers: this.headers,
+			observe: 'body'
+    	};
+    
+		return this.http.get<boolean>(
+			this.checkPredefinedPath + `/${id}`,
+			httpOptions);		
+  }
+
+  confirmRegistration(id : string) : Observable<User> {
+    let httpOptions = {};
+
+		httpOptions = {
+			headers: this.headers,
+			observe: 'body'
+    	};
+    
+		return this.http.get<User>(
+			this.confirmRegistrationPath + `/${id}`,
+			httpOptions);		
+  }
+
+
+  rejectRegistration(id : string) : Observable<User> {
+    let httpOptions = {};
+
+		httpOptions = {
+			headers: this.headers,
+			observe: 'body'
+    	};
+    
+		return this.http.get<User>(
+			this.rejectRegistrationPath + `/${id}`,
 			httpOptions);		
   }
 

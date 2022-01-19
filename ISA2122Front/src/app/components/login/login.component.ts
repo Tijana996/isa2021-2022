@@ -39,7 +39,10 @@ export class LoginComponent implements OnInit {
         if(JSON.parse(localStorage.getItem('currentUser') || "")?.roles?.includes("ROLE_KLIJENT")){
           //console.log(localStorage.getItem('currentUser'));
           this.router.navigate(['/home-page-user']); 
-        }else{
+        }else if(JSON.parse(localStorage.getItem('currentUser') || "")?.roles?.includes("ROLE_ADMIN")){
+          this.router.navigate(['/home-page-admin']); 
+        }
+        else{
           this.router.navigate(['/']); 
         }
       },

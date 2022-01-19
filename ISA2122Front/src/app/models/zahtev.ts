@@ -1,6 +1,6 @@
-export class UserReg {
+export class ZahtevReg {
     email: string;
-    password : string;
+    token : string;
     ime : string;
     prezime : string;
     adresa : string;

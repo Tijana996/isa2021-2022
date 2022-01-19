@@ -20,7 +20,7 @@ public class VerificationToken {
     private String token;
     
     @OneToOne(targetEntity = Korisnik.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = true, name = "user_id")
     private Korisnik user;
 	
     private Date expiryDate;

@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 import { MatCardModule} from '@angular/material/card';
+import { MatSelectModule} from '@angular/material/select';
 import {MatSortModule} from '@angular/material/sort';
 import { AuthentificationService } from './services/authentification.service';
 import { JwtUtilsService } from './services/jwt-utils.service';
@@ -28,6 +29,13 @@ import { VikendicaProfilComponent } from './components/vikendica-profil/vikendic
 import { VikendicaRezervacijaComponent } from './components/vikendica-rezervacija/vikendica-rezervacija.component';
 import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
 import { BrzeRezervacijeComponent } from './components/brze-rezervacije/brze-rezervacije.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import { HomePageAdminComponent } from './components/home-page-admin/home-page-admin.component';
+import { ZahteviRegistracijaPrikazComponent } from './components/zahtevi-registracija-prikaz/zahtevi-registracija-prikaz.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { DialogComponent } from './components/zahtevi-registracija-prikaz/dialog-component';
+import { RegisterAdminComponent } from './components/register-admin/register-admin.component';
 
 @NgModule({
   declarations: [
@@ -42,13 +50,17 @@ import { BrzeRezervacijeComponent } from './components/brze-rezervacije/brze-rez
     VikendicaProfilComponent,
     VikendicaRezervacijaComponent,
     RezervacijeComponent,
-    BrzeRezervacijeComponent
+    BrzeRezervacijeComponent,
+    HomePageAdminComponent,
+    ZahteviRegistracijaPrikazComponent,
+    DialogComponent,
+    RegisterAdminComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     CommonModule,
-    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     MatToolbarModule,
@@ -58,6 +70,10 @@ import { BrzeRezervacijeComponent } from './components/brze-rezervacije/brze-rez
     ReactiveFormsModule,
     MatCardModule,
     MatSortModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatTableModule,
+    MatDialogModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: JSON.parse(localStorage.getItem('currentUser') || '{"token":""}')?.token,

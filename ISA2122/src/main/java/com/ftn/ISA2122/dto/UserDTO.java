@@ -38,10 +38,9 @@ public class UserDTO {
     @NotBlank
     private String obrazlozenje;
 
-    @NotBlank
     private TipKorisnika tipKorisnika;
 
-    public UserDTO(String email, String password, String ime, String prezime, String adresa, String grad, String drzava, String broj, String obrazlozenje, TipKorisnika tip_korisnika) {
+    public UserDTO(String email, String password, String ime, String prezime, String adresa, String grad, String drzava, String broj, String obrazlozenje, TipKorisnika tipKorisnika) {
         this.email = email;
         this.password = password;
         this.ime = ime;
@@ -51,7 +50,7 @@ public class UserDTO {
         this.drzava = drzava;
         this.broj = broj;
         this.obrazlozenje = obrazlozenje;
-        this.tipKorisnika = tip_korisnika;
+        this.tipKorisnika = tipKorisnika;
     }
 
     public UserDTO(Korisnik u){

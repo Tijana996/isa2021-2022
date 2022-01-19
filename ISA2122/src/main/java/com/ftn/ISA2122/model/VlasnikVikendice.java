@@ -23,6 +23,11 @@ public class VlasnikVikendice extends Korisnik {
         this.vikendice = vikendice;
     }
 
+    public VlasnikVikendice(Korisnik entity) {
+        super(entity.getEmail(), entity.getLozinka(), entity.getIme(), entity.getPrezime(), entity.getAdresa(), entity.getGrad(), entity.getDrzava(), entity.getBroj(), entity.getPoeni(), entity.getKategorija(), entity.getPenali(), entity.isEnabled());
+    }
+
+
     public Set<Vikendica> getVikendice() {
         return vikendice;
     }

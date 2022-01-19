@@ -42,6 +42,9 @@ public class KorisnikService implements ServiceInterface<Korisnik> {
 	private AuthorityRepository authorityRepository;
 
 	@Autowired
+	private ZahtevZaRegistracijuRepository zahtevZaRegistracijuRepository;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
@@ -86,49 +89,49 @@ public class KorisnikService implements ServiceInterface<Korisnik> {
 		}
 
 		entity.setLozinka(passwordEncoder.encode(entity.getLozinka()));
+		entity.setEnabled(false);
 		if (tip.equals(TipKorisnika.KLIJENT)){
 			Authority authority =  authorityRepository.findByName("ROLE_KLIJENT");
 			setAuths(authority, entity);
-			klijentRepository.save((Klijent) entity);
+			return klijentRepository.save(new Klijent(entity));
 		}
 		else if (tip.equals(TipKorisnika.INSTRUKTOR)){
 			Authority authority =  authorityRepository.findByName("ROLE_INSTRUKTOR");
 			List<Authority> authorities = new ArrayList<>();
 			setAuths(authority, entity);
 
-			InstruktorPecanja instruktorPecanja = (InstruktorPecanja) entity;
+			InstruktorPecanja instruktorPecanja = new InstruktorPecanja(entity);
 			instruktorPecanja.setLokacija("lokacija");
 			instruktorPecanja.setOcena(0);
 
-			instruktorPecanjaRepository.save(instruktorPecanja);
+			return instruktorPecanjaRepository.save(instruktorPecanja);
 		}
 		else if (tip.equals(TipKorisnika.VLASNIKBRODA)){
 			Authority authority =  authorityRepository.findByName("ROLE_BROD");
 			setAuths(authority, entity);
 
-			VlasnikBroda vlasnikBroda = (VlasnikBroda) entity;
+			VlasnikBroda vlasnikBroda = new VlasnikBroda(entity);
 			vlasnikBroda.setBrodovi(new HashSet<>());
-			vlasnikBrodaRepository.save(vlasnikBroda);
+			return vlasnikBrodaRepository.save(vlasnikBroda);
 		}
 		else if (tip.equals(TipKorisnika.VLASNIKVIKENDICE)){
 			Authority authority =  authorityRepository.findByName("ROLE_VIKENDICA");
 			setAuths(authority, entity);
 
-			VlasnikVikendice vlasnikVikendice = (VlasnikVikendice) entity;
+			VlasnikVikendice vlasnikVikendice = new VlasnikVikendice(entity);
 			vlasnikVikendice.setVikendice(new HashSet<>());
-			vlasnikVikendiceRepository.save(vlasnikVikendice);
+			return vlasnikVikendiceRepository.save(vlasnikVikendice);
 		}
 		else {
 			Authority authority =  authorityRepository.findByName("ROLE_ADMIN");
 			setAuths(authority, entity);
 
-			Admin admin = (Admin) entity;
+			Admin admin = new Admin(entity);
 			admin.setPredefinisan(false);
 			admin.setMenjanjeLozinke(true);
-			adminRepository.save(admin);
+			return adminRepository.save(admin);
 		}
 
-		return entity;
 	}
 
 	private void setAuths(Authority authority, Korisnik entity){
@@ -187,10 +190,31 @@ public class KorisnikService implements ServiceInterface<Korisnik> {
 		}
 
 		Korisnik user = verificationToken.getUser();
+
+		ZahtevZaRegistraciju zahtevZaRegistraciju = zahtevZaRegistracijuRepository.findByKorisnik(user);
+		zahtevZaRegistracijuRepository.deleteById(zahtevZaRegistraciju.getId());
+
 		user.setToken(null);
 		user.setEnabled(true);
 		repository.save(user);
 		verificationTokenRepository.delete(verificationToken);
+	}
+
+	public void rejectRegistration(String token) throws Exception {
+		try{
+			VerificationToken verificationToken =
+					verificationTokenRepository.findByTokenAndType(token, VerificationTokenType.REGISTRATION);
+			Korisnik user = verificationToken.getUser();
+			ZahtevZaRegistraciju zahtevZaRegistraciju = zahtevZaRegistracijuRepository.findByKorisnik(user);
+			zahtevZaRegistracijuRepository.deleteById(zahtevZaRegistraciju.getId());
+
+			repository.deleteById(user.getId());
+			verificationTokenRepository.delete(verificationToken);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new Exception("User with given id doesn't exist");
+		}
+
 	}
 
 	public Korisnik findByEmail(String email) {

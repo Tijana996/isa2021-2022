@@ -1,5 +1,6 @@
 package com.ftn.ISA2122.service;
 
+import com.ftn.ISA2122.model.Korisnik;
 import com.ftn.ISA2122.model.ZahtevZaRegistraciju;
 import com.ftn.ISA2122.repository.ZahtevZaRegistracijuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,15 @@ public class ZahtevZaRegistracijuService implements ServiceInterface<ZahtevZaReg
         return repository.findAll();
     }
 
+    public List<ZahtevZaRegistraciju> findAllExceptKlijenti() { return repository.findAllByObrazlozenjeNotLike(" ");}
+
     @Override
     public ZahtevZaRegistraciju findOne(Long id) {
         return repository.getById(id);
+    }
+
+    public ZahtevZaRegistraciju findByKorisnik(Korisnik korisnik) {
+        return repository.findByKorisnik(korisnik);
     }
 
     @Override

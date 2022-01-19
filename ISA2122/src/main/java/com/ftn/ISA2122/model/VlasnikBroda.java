@@ -12,6 +12,10 @@ public class VlasnikBroda extends Korisnik {
     @OneToMany(mappedBy="id")
     private Set<Brod> brodovi;
 
+    public VlasnikBroda(Korisnik entity) {
+        super(entity.getEmail(), entity.getLozinka(), entity.getIme(), entity.getPrezime(), entity.getAdresa(), entity.getGrad(), entity.getDrzava(), entity.getBroj(), entity.getPoeni(), entity.getKategorija(), entity.getPenali(), entity.isEnabled());
+    }
+
     public VlasnikBroda(String email, String lozinka, String ime, String prezime, String adresa, String grad, String drzava, String broj, int poeni, int kategorija, int penali, boolean enabled, Set<Brod> brodovi) {
         super(email, lozinka, ime, prezime, adresa, grad, drzava, broj, poeni, kategorija, penali, enabled);
         this.brodovi = brodovi;

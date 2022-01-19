@@ -11,6 +11,7 @@ import com.ftn.ISA2122.model.Klijent;
 import com.ftn.ISA2122.model.Korisnik;
 import com.ftn.ISA2122.model.ZahtevZaRegistraciju;
 import com.ftn.ISA2122.security.TokenUtils;
+import com.ftn.ISA2122.service.AdminService;
 import com.ftn.ISA2122.service.KorisnikService;
 import com.ftn.ISA2122.service.ZahtevZaRegistracijuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,6 +41,9 @@ public class AuthenticationController {
 
     @Autowired
     private KorisnikService userService;
+
+    @Autowired
+    private AdminService adminService;
 
     @Autowired
     private ZahtevZaRegistracijuService zahtevZaRegistracijuService;
@@ -84,9 +89,16 @@ public class AuthenticationController {
     public ResponseEntity<?> registerUser(@RequestBody @Valid UserDTO userRequest, UriComponentsBuilder ucBuilder) throws Exception {
        try {
            Korisnik user = userService.createKorisnik(userMapper.toEntity(userRequest), userRequest.getTipKorisnika());
-           ZahtevZaRegistraciju entity = new ZahtevZaRegistraciju();
-           entity.setKorisnik(user);
-           zahtevZaRegistracijuService.create(entity);
+
+           if (!(user instanceof Klijent)){
+               String token = UUID.randomUUID().toString();
+               userService.createRegistrationVerificationToken(user, token);
+           }
+
+           ZahtevZaRegistraciju zahtevZaRegistraciju = new ZahtevZaRegistraciju();
+           zahtevZaRegistraciju.setKorisnik(user);
+           zahtevZaRegistraciju.setObrazlozenje(userRequest.getObrazlozenje());
+           zahtevZaRegistracijuService.create(zahtevZaRegistraciju);
            //HttpHeaders headers = new HttpHeaders();
            //headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
            //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
@@ -122,13 +134,38 @@ public class AuthenticationController {
         }
     }
 
+    @GetMapping("/registration-reject-owners/{token}")
+    public ResponseEntity<?> rejectRegistrationOwners(@PathVariable("token") String token){
+        try {
+            userService.rejectRegistration(token);
+            return new ResponseEntity<>("Korisnik je odbijen", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @GetMapping("/applications")
     public ResponseEntity<?> getAllZahteviZaRegistraciju(){
         try {
-            List<ZahtevZaRegistraciju> zahtevi = zahtevZaRegistracijuService.findAll();
+            List<ZahtevZaRegistraciju> zahtevi = zahtevZaRegistracijuService.findAllExceptKlijenti();
             return new ResponseEntity<>(getDTOList(zahtevi), HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/predefined/{id}")
+    public ResponseEntity<?> getIfPredefinisan(@PathVariable("id") Long id){
+        try {
+            Admin a = adminService.findOne(id);
+            if(a.isPredefinisan())
+                return new ResponseEntity<>("true", HttpStatus.OK);
+            else
+                return new ResponseEntity<>("false", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

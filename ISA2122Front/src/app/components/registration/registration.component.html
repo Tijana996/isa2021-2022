@@ -4,6 +4,15 @@
     <form class="reactiveForm" [formGroup] = "registrationForm" (submit) = "onSubmit()">
     <h2>Sign up</h2>
         <div fxLayout="column">
+            <mat-form-field appearance="fill">
+                <mat-label>Tip korisnika</mat-label>
+                <mat-select formControlName="tip_korisnika" (selectionChange)="onSelectionChanged($event)">
+                  <mat-option *ngFor="let tip of tipovi" [value]="tip.value">
+                    {{tip.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
             <mat-form-field class="full-width-input">
                 <input matInput placeholder="Email" name="email" formControlName="email" required/>
             </mat-form-field>
@@ -38,6 +47,11 @@
 
             <mat-form-field class="full-width-input">
                 <input matInput type="text" placeholder="Prezime" name="prezime" formControlName="prezime" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width-input" appearance="fill">
+                <mat-label>Obrazlozenje</mat-label>
+                <textarea matInput placeholder="Unesite obrazlozenje" formControlName="obrazlozenje"></textarea>
             </mat-form-field>
 
         </div>

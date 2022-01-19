@@ -13,7 +13,7 @@ import static javax.persistence.InheritanceType.SINGLE_TABLE;
 @Entity
 @Table(name="korisnici")
 @Inheritance(strategy=SINGLE_TABLE)
-@SequenceGenerator(name="korisnik_generator",initialValue = 4 ,sequenceName = "korisnik_seq")
+@SequenceGenerator(name="korisnik_generator",initialValue = 6 ,sequenceName = "korisnik_seq")
 @DiscriminatorColumn(name="type", discriminatorType=STRING)
 public class Korisnik implements UserDetails {
 
@@ -64,7 +64,7 @@ public class Korisnik implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
-    @OneToOne(targetEntity = VerificationToken.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = VerificationToken.class, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(nullable = true, name = "token_id")
     private VerificationToken token;
 

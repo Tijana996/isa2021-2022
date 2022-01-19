@@ -17,6 +17,10 @@ export class RegistrationComponent implements OnInit {
   wrong: boolean;
   errorMessage: string;
 
+  selectedTip: string;
+
+  tipovi: any[];
+
   constructor(
     private fb: FormBuilder,
     private route : Router,
@@ -24,7 +28,15 @@ export class RegistrationComponent implements OnInit {
   ) {
     this.wrong = false; 
     this.user = new UserReg();
+    this.selectedTip = '';
+    this.tipovi = [
+      {value: 'KLIJENT', viewValue: 'Klijent'},
+      {value: 'INSTRUKTOR', viewValue: 'Instruktor pecanja'},
+      {value: 'VLASNIKVIKENDICE', viewValue: 'Vlasnik vikendice'},
+      {value: 'VLASNIKBRODA', viewValue: 'Vlasnik broda'},
+    ];
     this.registrationForm = this.fb.group({
+      'tip_korisnika' :['',Validators.required],
       'email':['',[Validators.required, Validators.email]],
       'password' : ['', Validators.required],
       'passwordc' : ['', Validators.required],
@@ -33,12 +45,22 @@ export class RegistrationComponent implements OnInit {
       'broj' : ['', Validators.required],
       'grad' : ['', Validators.required],
       'ime' : ['', Validators.required],
-      'prezime' : ['', Validators.required]
+      'prezime' : ['', Validators.required],
+      'obrazlozenje' : ['']
     });
   }
 
   ngOnInit(): void {
   }
+
+  onSelectionChanged(event: any) {
+    if(this.registrationForm.controls['tip_korisnika'].value == 'KLIJENT'){
+      this.registrationForm.controls['obrazlozenje'].reset();
+      this.registrationForm.controls['obrazlozenje'].disable();
+    }
+    else
+      this.registrationForm.controls['obrazlozenje'].enable();
+ }
 
   
   onSubmit(){
@@ -50,6 +72,7 @@ export class RegistrationComponent implements OnInit {
         return;
       }
       this.user = new UserReg();
+      this.user.tipKorisnika = this.registrationForm.controls['tip_korisnika'].value;
       this.user.email = this.registrationForm.controls['email'].value;
       this.user.password = this.registrationForm.controls['password'].value;
       this.user.adresa = this.registrationForm.controls['adresa'].value;
@@ -59,10 +82,18 @@ export class RegistrationComponent implements OnInit {
       this.user.ime = this.registrationForm.controls['ime'].value;
       this.user.prezime = this.registrationForm.controls['prezime'].value;
       //this.user = this.registrationForm.value;
+
+      if (this.user.tipKorisnika != 'KLIJENT'){
+        this.user.obrazlozenje = this.registrationForm.controls['obrazlozenje'].value;
+      }
+      else{
+        this.user.obrazlozenje = ' ';
+      }
+
       console.log(this.user);
       this.regService.signup(this.user).subscribe( 
         result => {
-          alert("Korisnik je kreiran");
+          alert("Zahtev za kreiranje naloga je poslat!");
           this.route.navigate(['/']);
         },        
         (err:Error) =>{
