@@ -183,14 +183,14 @@ public class AuthenticationController {
     }
 
     @PostMapping ("/first-login-password")
-    public ResponseEntity<?> setChangedPasswordFirstLogin(@RequestBody String email, String password){
+    public ResponseEntity<?> setChangedPasswordFirstLogin(@RequestBody String password){
         try {
-            Admin user = (Admin)userService.findByEmail(email);
-            user.setMenjanjeLozinke(false);
+            Admin user = (Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user.setLozinka(password);
-            userService.update(user, user.getId());
-            return new ResponseEntity<>("Uspesno promenjena lozinka!", HttpStatus.OK);
+            adminService.update(user, user.getId());
+            return new ResponseEntity<>("true", HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

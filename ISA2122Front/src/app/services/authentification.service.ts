@@ -35,6 +35,7 @@ export class AuthentificationService {
   private readonly registrationPath = 'http://localhost:8080/auth/sign-up';
   private readonly registerAdminPath = 'http://localhost:8080/auth/sign-up-admin';
   private readonly checkPredefinedPath = 'http://localhost:8080/auth/predefined';
+  private readonly chanePasswordFirstLoginPath = 'http://localhost:8080/auth/first-login-password';
   private readonly confirmRegistrationPath = 'http://localhost:8080/auth/registration-confirm-owners';
   private readonly rejectRegistrationPath = 'http://localhost:8080/auth/registration-reject-owners';
   private readonly usersPath = 'http://localhost:8080/user';
@@ -121,6 +122,32 @@ export class AuthentificationService {
     
 		return this.http.post<User>(
 			this.registerAdminPath, user,
+			httpOptions);		
+  }
+
+  getPasswordChange() : Observable<boolean> {
+    let httpOptions = {};
+
+		httpOptions = {
+			headers: this.headers,
+			observe: 'body'
+    	};
+    
+		return this.http.get<boolean>(
+			this.usersPath + '/is_admin',
+			httpOptions);		
+  }
+
+  changePassword(password : string) : Observable<boolean> {
+    let httpOptions = {};
+
+		httpOptions = {
+			headers: this.headers,
+			observe: 'body'
+    	};
+    
+		return this.http.post<boolean>(
+			this.chanePasswordFirstLoginPath, password,
 			httpOptions);		
   }
 

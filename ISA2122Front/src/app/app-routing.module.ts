@@ -4,6 +4,7 @@ import { BrzeRezervacijeComponent } from './components/brze-rezervacije/brze-rez
 import { HomePageAdminComponent } from './components/home-page-admin/home-page-admin.component';
 import { HomePageUserComponent } from './components/home-page-user/home-page-user.component';
 import { LoginComponent } from './components/login/login.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
 import { RegisterAdminComponent } from './components/register-admin/register-admin.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
@@ -16,6 +17,7 @@ import { ZahteviRegistracijaPrikazComponent } from './components/zahtevi-registr
 const routes: Routes = [
   { path: 'home-page-user', component : HomePageUserComponent },
   { path: 'home-page-admin', component : HomePageAdminComponent },
+  { path: 'password-change-admin', component : PasswordChangeComponent },
   { path: 'login', component : LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'register-admin', component: RegisterAdminComponent },

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,9 +40,9 @@ public class UserController {
     }
 
     @GetMapping("/is_admin")
-    public ResponseEntity<?> getMenjanjeLozinke(@PathVariable("email") String email) {
+    public ResponseEntity<?> getMenjanjeLozinke() {
         try{
-            Admin k = (Admin)korisnikService.findByEmail(email);
+            Admin k = (Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return new ResponseEntity<>(k.isMenjanjeLozinke(), HttpStatus.OK);
         } catch (Exception ex){
             return new ResponseEntity<>("Korisnik nije admin", HttpStatus.BAD_REQUEST);

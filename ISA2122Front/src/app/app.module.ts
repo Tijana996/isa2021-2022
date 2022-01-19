@@ -36,6 +36,7 @@ import { ZahteviRegistracijaPrikazComponent } from './components/zahtevi-registr
 import {MatDialogModule} from "@angular/material/dialog";
 import { DialogComponent } from './components/zahtevi-registracija-prikaz/dialog-component';
 import { RegisterAdminComponent } from './components/register-admin/register-admin.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { RegisterAdminComponent } from './components/register-admin/register-adm
     HomePageAdminComponent,
     ZahteviRegistracijaPrikazComponent,
     DialogComponent,
-    RegisterAdminComponent
+    RegisterAdminComponent,
+    PasswordChangeComponent
   ],
   imports: [
     BrowserModule,

@@ -40,7 +40,17 @@ export class LoginComponent implements OnInit {
           //console.log(localStorage.getItem('currentUser'));
           this.router.navigate(['/home-page-user']); 
         }else if(JSON.parse(localStorage.getItem('currentUser') || "")?.roles?.includes("ROLE_ADMIN")){
-          this.router.navigate(['/home-page-admin']); 
+          this.authService.getPasswordChange().subscribe( 
+            result => {
+              if (result){
+                this.router.navigate(['/password-change-admin']);
+              }else{
+                this.router.navigate(['/home-page-admin']);
+              }
+            },        
+            (err:Error) =>{
+              this.router.navigate(['/home-page-admin']); 
+            });
         }
         else{
           this.router.navigate(['/']); 
