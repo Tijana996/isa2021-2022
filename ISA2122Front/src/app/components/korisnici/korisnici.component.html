@@ -8,4 +8,25 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
+<table>
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of korisnici">
+            
+            <td>{{u.email}}</td>
+            <td>{{u.ime}}</td>
+            <td>{{u.prezime}}</td>
+            <td><input type = "button" (click)="delete(u.email)" value = "delete"/></td>
+        </tr>
+    </tbody>
+    
+  </table>
+
+
 <router-outlet></router-outlet>

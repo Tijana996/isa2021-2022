@@ -10,6 +10,6 @@ export class UserProfile { //id,email, lozinka, poeni, kategorija, penali, enabl
     poeni: number;
     kategorija : string;
     penali : number;
-
+    id:number;
     constructor(){}
 }

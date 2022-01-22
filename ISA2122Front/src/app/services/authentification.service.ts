@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { UserProfile } from '../models/userprofile';
 import { UserReg } from '../models/userregister';
 import { JwtUtilsService } from './jwt-utils.service';
 
@@ -218,7 +219,7 @@ export class AuthentificationService {
 			httpOptions);		
   }
 
-  updateUser(user: User, username: string) : Observable<User> {
+  updateUser(user: UserProfile) : Observable<User> {
     let httpOptions = {};
 
 		httpOptions = {
@@ -227,7 +228,7 @@ export class AuthentificationService {
     	};
     
 		return this.http.put<User>(
-			this.usersPath + `/profile/${username}`,user,
+			this.usersPath +'/'+user.email,user,
 			httpOptions);		
   }
 
@@ -255,7 +256,9 @@ export class AuthentificationService {
   
 
   public isAdmin(): any{
-    return JSON.parse(localStorage.getItem('currentUser') || '{}');
+    var user = JSON.parse(localStorage.getItem('currentUser'));
+    if(user == undefined) return false;
+    return user.roles[0] == 'ROLE_ADMIN' ? true : false;
   }
 
   public isKlijent(): any{
@@ -267,5 +270,31 @@ export class AuthentificationService {
 
   public isPraviAdmin(): any{
     return JSON.parse(localStorage.getItem('currentUser') || '{}').username;
+  }
+
+  public getUsers() : Observable<any> {
+    let httpOptions = {};
+
+		httpOptions = {
+			headers: this.headers,
+			observe: 'body'
+    	};
+    
+		return this.http.get<any>(
+			this.usersPath+"/all/"+JSON.parse(localStorage.getItem('currentUser') || '{}').id,
+			httpOptions);		
+  }
+
+  public deleteUser(id) : Observable<any> {
+    let httpOptions = {};
+
+		httpOptions = {
+			headers: this.headers,
+			observe: 'body'
+    	};
+    
+		return this.http.delete<any>(
+			this.usersPath+"/"+id,
+			httpOptions);		
   }
 }

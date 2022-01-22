@@ -63,4 +63,11 @@ public class BrodController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) throws Exception {
+
+        brodService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

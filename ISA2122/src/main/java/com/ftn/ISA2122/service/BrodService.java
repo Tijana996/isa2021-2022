@@ -1,8 +1,9 @@
 package com.ftn.ISA2122.service;
 
-import com.ftn.ISA2122.model.Brod;
-import com.ftn.ISA2122.model.Rezervacija;
+import com.ftn.ISA2122.model.*;
 import com.ftn.ISA2122.repository.BrodRepository;
+import com.ftn.ISA2122.repository.KorisnikRepository;
+import com.ftn.ISA2122.repository.RezervacijaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BrodService implements ServiceInterface<Brod>{
 
     @Autowired
     BrodRepository brodRepository;
+
+    @Autowired
+    KorisnikRepository korisnikRepository;
+
+    @Autowired
+    RezervacijaRepository rezervacijaRepository;
 
     @Override
     public List<Brod> findAll() {
@@ -40,7 +48,24 @@ public class BrodService implements ServiceInterface<Brod>{
 
     @Override
     public void delete(Long id) throws Exception {
-
+        List<Korisnik> korisnici = korisnikRepository.findAll();
+        List<Rezervacija> rezervacije = rezervacijaRepository.findAll();
+        Brod brod = brodRepository.findById(id).orElse(null);
+        for(Rezervacija r: rezervacije)
+        {
+            if(r.getBrodovi()!= null && r.getBrodovi().getId() == id) return;
+        }
+        for(Korisnik k : korisnici)
+        {
+            if(k instanceof VlasnikBroda)
+            {
+                VlasnikBroda vv = (VlasnikBroda) k;
+                Set<Brod> brodovi = vv.getBrodovi();
+                brodovi.remove(brod);
+                korisnikRepository.save(k);
+            }
+        }
+        brodRepository.delete(brod);
     }
 
     public List<Brod> search(String datumod, String datumdo, String lokacija, int ocena) throws ParseException {

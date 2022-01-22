@@ -43,6 +43,8 @@ import { ZalbePrikazComponent } from './components/zalbe-prikaz/zalbe-prikaz.com
 import { DialogOdgovorComponent } from './components/zalbe-prikaz/dialog-odgovor-component';
 import { IstruktoriComponent } from './components/istruktori/istruktori.component';
 import { IstruktorProfilComponent } from './components/istruktor-profil/istruktor-profil.component';
+import { KorisniciComponent } from './components/korisnici/korisnici.component';
+import { ZahteviBrisanjeNalogaComponent } from './components/zahtevi-brisanje-naloga/zahtevi-brisanje-naloga.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { IstruktorProfilComponent } from './components/istruktor-profil/istrukto
     DialogOdgovorComponent,
     ZalbePrikazComponent,
     IstruktoriComponent,
-    IstruktorProfilComponent
+    IstruktorProfilComponent,
+    KorisniciComponent,
+    ZahteviBrisanjeNalogaComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,7 @@
 package com.ftn.ISA2122.service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.ftn.ISA2122.model.*;
 import com.ftn.ISA2122.repository.*;
@@ -158,7 +156,15 @@ public class KorisnikService implements ServiceInterface<Korisnik> {
 	public void delete(Long id) throws Exception {
 		try{
 			Korisnik user = repository.findById(id).orElse(null);
-			//TODO provera dal ima pregleda ili sta vec pise u specifikaciji
+			if(user instanceof Klijent){
+				Klijent k = (Klijent) user;
+				for(Rezervacija r : k.getRezervacije()){
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Date d = sdf.parse(r.getStart());
+					Date today = new Date();
+					if(d.after(today)) return;
+				}
+			}
 			repository.deleteById(id);
 
 		}catch(Exception e){
@@ -166,6 +172,27 @@ public class KorisnikService implements ServiceInterface<Korisnik> {
 			throw new Exception("User with given id doesn't exist");
 		}
 		
+	}
+
+
+	public Korisnik update(Korisnik entity, String email) throws Exception{
+		Korisnik user = repository.findByEmail(email);
+		if(user == null) throw new Exception("User with given id doesn't exist");
+
+		if(!user.getEmail().equals(entity.getEmail())) throw new Exception("Email can't be changed");
+
+		if(!user.getPassword().equals(passwordEncoder.encode(entity.getPassword())) && !user.getPassword().equals(entity.getPassword())) {
+			user.setLozinka(passwordEncoder.encode(entity.getPassword()));
+		}
+
+		user.setAdresa(entity.getAdresa());
+		user.setDrzava(entity.getDrzava());
+		user.setBroj(entity.getBroj());
+		user.setGrad(entity.getGrad());
+		user.setIme(entity.getIme());
+		user.setPrezime(entity.getPrezime());
+
+		return repository.save(user);
 	}
 
 	public void createRegistrationVerificationToken(Korisnik user, String token) {

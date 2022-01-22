@@ -91,6 +91,7 @@
             <td>{{u.pravila}}</td>
             <td>{{u.ocena}}</td>
             <td><input type = "button" (click)="rezervisi(u.id)" *ngIf="klijent" value = "rezervisi"/></td>
+            <td><input type = "button" (click)="obrisi(u.id)" *ngIf="admin" value = "obrisi"/></td>
         </tr>
     </tbody>
     

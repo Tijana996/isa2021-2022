@@ -1,8 +1,10 @@
+
 <div class="outer">
     <div class="middle">
       <div class="inner">
         
-        
+        <button mat-raised-button color="primary" routerLink="/"><span class="material-icons"></span> Back</button>
+
         <div class="center myFonts">
           <h2>Log in</h2>
         <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">

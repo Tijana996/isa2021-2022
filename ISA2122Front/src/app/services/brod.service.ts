@@ -54,4 +54,16 @@ export class BrodService {
 
     return this.http.post<any>( this.newsPath+'/search/',JSON.stringify({ s1,s2,s3,s4 }), httpOptions);
   }
+
+  delete(id): Observable<any>{
+    let httpOptions = {};
+
+    httpOptions = {
+        headers: this.headers,
+        observe: 'body',
+        //data : search
+    };
+
+    return this.http.delete<any>( this.newsPath+'/'+id, httpOptions);
+  }
 }

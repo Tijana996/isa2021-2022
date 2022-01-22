@@ -1,7 +1,10 @@
 package com.ftn.ISA2122.service;
 
+import com.ftn.ISA2122.model.Korisnik;
 import com.ftn.ISA2122.model.Rezervacija;
 import com.ftn.ISA2122.model.Vikendica;
+import com.ftn.ISA2122.model.VlasnikVikendice;
+import com.ftn.ISA2122.repository.KorisnikRepository;
 import com.ftn.ISA2122.repository.RezervacijaRepository;
 import com.ftn.ISA2122.repository.VikendicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +15,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class VikendicaService implements ServiceInterface<Vikendica> {
     @Autowired
     VikendicaRepository vikendicaRepository;
+
+    @Autowired
+    RezervacijaRepository rezervacijaRepository;
+
+    @Autowired
+    KorisnikRepository korisnikRepository;
 
     @Override
     public List<Vikendica> findAll() {
@@ -40,7 +50,24 @@ public class VikendicaService implements ServiceInterface<Vikendica> {
 
     @Override
     public void delete(Long id) throws Exception {
-
+        List<Korisnik> korisnici = korisnikRepository.findAll();
+        List<Rezervacija> rezervacije = rezervacijaRepository.findAll();
+        Vikendica vikendica = vikendicaRepository.findById(id).orElse(null);
+        for(Rezervacija r: rezervacije)
+        {
+            if(r.getVikendice()!= null && r.getVikendice().getId() == id) return;
+        }
+        for(Korisnik k : korisnici)
+        {
+            if(k instanceof VlasnikVikendice)
+            {
+                VlasnikVikendice vv = (VlasnikVikendice) k;
+                Set<Vikendica> vikendice = vv.getVikendice();
+                vikendice.remove(vikendica);
+                korisnikRepository.save(k);
+            }
+        }
+        vikendicaRepository.delete(vikendica);
     }
 
     public List<Vikendica> search(String datumod, String datumdo, String lokacija, int ocena) throws ParseException {

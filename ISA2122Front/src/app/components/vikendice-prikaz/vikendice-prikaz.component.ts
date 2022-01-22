@@ -17,11 +17,13 @@ export class VikendicePrikazComponent implements OnInit {
   vikendicePravo: [];
   datum : string;
   klijent : boolean;
+  admin : boolean;
 
   constructor(private vikendicaService: VikendicaService, public router: Router, private service: AuthentificationService) { }
 
   ngOnInit(): void {
     this.klijent = this.service.isKlijent();
+    this.admin = this.service.isAdmin();
     this.vikendicaService.getVikendice().subscribe(
       result => {
         console.log(result.body);
@@ -97,5 +99,19 @@ export class VikendicePrikazComponent implements OnInit {
       return;
     }
     this.router.navigate(['/rezervacija/vikendica/'+id+'/'+this.datum]); 
+  }
+
+  obrisi(id){
+    this.vikendicaService.delete(id).subscribe(
+      result => {
+        console.log(result.body);
+        this.vikendice = result.body;
+        this.vikendicePravo = result.body;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
   }
 }

@@ -80,4 +80,11 @@ public class VikendicaController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) throws Exception {
+
+        vikendicaService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
