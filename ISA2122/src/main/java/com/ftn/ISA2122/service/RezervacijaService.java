@@ -50,22 +50,7 @@ public class RezervacijaService implements ServiceInterface<Rezervacija>{
             v.setRezervacije(r2);
             vikendicaRepository.save(v);
         }
-        if(entity.getBrodovi()!=null)
-        {
-            Brod v = entity.getBrodovi();
-            Set<Rezervacija> r2 = v.getRezervacije();
-            r2.add(entity);
-            v.setRezervacije(r2);
-            brodRepository.save(v);
-        }
-        if(entity.getInstruktori()!=null)
-        {
-            InstruktorPecanja v = entity.getInstruktori();
-            Set<Rezervacija> r2 = v.getRezervacije();
-            r2.add(entity);
-            v.setRezervacije(r2);
-            instruktorPecanjaRepository.save(v);
-        }
+
         korisnikRepository.save(k);
         return rezervacijaRepository.save(entity);
     }
@@ -90,6 +75,43 @@ public class RezervacijaService implements ServiceInterface<Rezervacija>{
         k.setRezervacije(rezervacije);
         korisnikRepository.save(k);
         rezervacijaRepository.delete(entity);
+    }
+
+    public Rezervacija createbrod(Rezervacija entity) throws Exception {
+        Klijent k = entity.getKlijenti();
+        Set<Rezervacija> r1 = k.getRezervacije();
+        r1.add(entity);
+        k.setRezervacije(r1);
+
+        if(entity.getBrodovi()!=null)
+        {
+            Brod v = entity.getBrodovi();
+            Set<Rezervacija> r2 = v.getRezervacije();
+            r2.add(entity);
+            v.setRezervacije(r2);
+            brodRepository.save(v);
+        }
+
+        korisnikRepository.save(k);
+        return rezervacijaRepository.save(entity);
+    }
+
+
+    public Rezervacija createinst(Rezervacija entity) throws Exception {
+        Klijent k = entity.getKlijenti();
+        Set<Rezervacija> r1 = k.getRezervacije();
+        r1.add(entity);
+        k.setRezervacije(r1);
+        if(entity.getInstruktori()!=null)
+        {
+            InstruktorPecanja v = entity.getInstruktori();
+            Set<Rezervacija> r2 = v.getRezervacije();
+            r2.add(entity);
+            v.setRezervacije(r2);
+            instruktorPecanjaRepository.save(v);
+        }
+        korisnikRepository.save(k);
+        return rezervacijaRepository.save(entity);
     }
 
 }

@@ -58,19 +58,24 @@ public class RezervacijaController {
         {
             Vikendica v = vikendicaService.findOne(rezervacijaDTO.getVikendice());
             r.setVikendice(v);
+            r.setKlijenti(k);
+            rezervacijaService.create(r);
         }
         if(rezervacijaDTO.getBrodovi()!= null)
         {
             Brod b = brodService.findOne(rezervacijaDTO.getBrodovi());
             r.setBrodovi(b);
+            r.setKlijenti(k);
+            rezervacijaService.createbrod(r);
         }
         if(rezervacijaDTO.getInstruktor()!= null)
         {
             InstruktorPecanja v = instruktorService.findOne(rezervacijaDTO.getInstruktor());
             r.setInstruktori(v);
+            r.setKlijenti(k);
+            rezervacijaService.createinst(r);
         }
-        r.setKlijenti(k);
-        rezervacijaService.create(r);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -4,6 +4,7 @@ import com.ftn.ISA2122.dto.UserDTO;
 import com.ftn.ISA2122.dto.UserLoginDTO;
 import com.ftn.ISA2122.dto.UserTokenStateDTO;
 import com.ftn.ISA2122.dto.ZahtevZaRegistracijuDTO;
+import com.ftn.ISA2122.event.OnRegistrationCompleteEvent;
 import com.ftn.ISA2122.helper.UserRegMapper;
 import com.ftn.ISA2122.helper.ZahtevZaRegistracijuMapper;
 import com.ftn.ISA2122.model.Admin;
@@ -20,6 +21,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -54,6 +57,9 @@ public class AuthenticationController {
 
     @Autowired
     private TokenUtils tokenUtils;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -96,13 +102,16 @@ public class AuthenticationController {
                userService.createRegistrationVerificationToken(user, token);
            }
 
+           if ((user instanceof Klijent)){
+               HttpHeaders headers = new HttpHeaders();
+               headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
+               eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
+           }
+
            ZahtevZaRegistraciju zahtevZaRegistraciju = new ZahtevZaRegistraciju();
            zahtevZaRegistraciju.setKorisnik(user);
            zahtevZaRegistraciju.setObrazlozenje(userRequest.getObrazlozenje());
            zahtevZaRegistracijuService.create(zahtevZaRegistraciju);
-           //HttpHeaders headers = new HttpHeaders();
-           //headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
-           //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
            return new ResponseEntity<>("User successfully registered.", HttpStatus.CREATED);
        } catch (Exception e) {
            e.printStackTrace();
@@ -123,24 +132,20 @@ public class AuthenticationController {
     }
 
     @GetMapping("/registration-confirm/{token}")
-    public ResponseEntity<?> confirmRegistration(@PathVariable("token") String token) throws URISyntaxException {
+    public void confirmRegistration(@PathVariable("token") String token) throws Exception {
         HttpHeaders httpHeaders = new HttpHeaders();
-        try {
-            userService.verifyRegistrationToken(token);
-            return ResponseEntity.status(HttpStatus.FOUND)
-                    .location(URI.create("https://localhost:4200/register-success-redirect"))
-                    .build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FOUND)
-                    .location(URI.create("https://localhost:4200/register-token-expired"))
-                    .build();
-        }
+        userService.verifyRegistrationToken(token);
     }
 
     @GetMapping("/registration-confirm-owners/{token}")
     public ResponseEntity<?> confirmRegistrationOwners(@PathVariable("token") String token){
         try {
             userService.verifyRegistrationToken(token);
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setFrom("isatijana@outlook.com");
+            email.setTo("isatijana@outlook.com");
+            email.setSubject("Zahtev potvrdjen");
+            mailSender.send(email);
             return new ResponseEntity<>("Korisnik je registrovan", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -151,6 +156,11 @@ public class AuthenticationController {
     public ResponseEntity<?> rejectRegistrationOwners(@PathVariable("token") String token){
         try {
             userService.rejectRegistration(token);
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setFrom("isatijana@outlook.com");
+            email.setTo("isatijana@outlook.com");
+            email.setSubject("Zahtev odbijen");
+            mailSender.send(email);
             return new ResponseEntity<>("Korisnik je odbijen", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

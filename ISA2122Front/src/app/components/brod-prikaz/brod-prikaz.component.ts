@@ -93,4 +93,17 @@ export class BrodPrikazComponent implements OnInit {
     }
     this.router.navigate(['/rezervacija/brod/'+id+'/'+this.datum]); 
   }
+
+  obrisi(id){
+    this.brodoviService.delete(id).subscribe(
+      result => {
+        console.log(result.body);
+        
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
+  }
 }
