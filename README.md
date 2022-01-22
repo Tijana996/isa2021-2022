@@ -12,6 +12,7 @@
   - U Visual Studio Codu, uz pomoc naredbe 'cd' u terminalu, locirati se u folder ISA2122Front i pokrenuti izvrsavanje koda uz pomoc naredbe 'ng serve'
 
 -Na pretrazivacu otvoriti http://localhost:4200/
+
 -Kredencijali:
   - Admin - email: markomarkovic@gmail.com, password: admin
   - Klijent - email:anaanic@gmail.com, password: admin
