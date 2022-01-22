@@ -64,6 +64,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/vikendica/**").permitAll()
                 .antMatchers("/rezervacija/**").permitAll()
                 .antMatchers("/zalba/**").permitAll()
+                .antMatchers("/brod/**").permitAll()
+                .antMatchers("/instruktori/**").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService),BasicAuthenticationFilter.class);

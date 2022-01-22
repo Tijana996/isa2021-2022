@@ -7,17 +7,17 @@ import { JwtUtilsService } from './jwt-utils.service';
 @Injectable({
   providedIn: 'root'
 })
-export class BrodService {
+export class InstruktorService {
 
   
 
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  private readonly newsPath = 'http://localhost:8080/brod';
+  private readonly newsPath = 'http://localhost:8080/instruktori';
 
   constructor(private http: HttpClient) { }
 
-  getBrodovi() : Observable<any>{
+  getInstruktori() : Observable<any>{
       let httpOptions = {};
 
       httpOptions = {
@@ -29,7 +29,7 @@ export class BrodService {
       return this.http.get<any>( this.newsPath, httpOptions);
   }
 
-  getBrod(id) : Observable<any>{
+  getInstruktor(id) : Observable<any>{
     let httpOptions = {};
 
     console.log(id);
@@ -43,7 +43,7 @@ export class BrodService {
   }
 
   
-  getBrodSearch(s1,s2,s3,s4): Observable<any>{
+  getInstruktorSearch(s1,s2,s3,s4): Observable<any>{
     let httpOptions = {};
 
     httpOptions = {

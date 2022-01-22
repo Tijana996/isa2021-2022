@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { RezervacijaService } from 'src/app/services/rezervacija.service';
 
 @Component({
@@ -12,10 +13,11 @@ export class BrzeRezervacijeComponent implements OnInit {
   rezervacije : [];
   id : string;
 
-  constructor(private _Activatedroute:ActivatedRoute, private service: RezervacijaService) { }
+  constructor(private _Activatedroute:ActivatedRoute, private service: RezervacijaService, private authService: AuthentificationService, private router : Router) { }
 
   ngOnInit(): void {
-    console.log("dhdka");
+    if(!this.authService.isKlijent())
+      this.router.navigate(['/']);
     
     this.service.getRezervacije(1).subscribe(
       result => {

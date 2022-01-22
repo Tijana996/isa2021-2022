@@ -41,6 +41,8 @@ import { PasswordChangeComponent } from './components/password-change/password-c
 import { DialogZalbaComponent } from './components/rezervacije/dialog-zalba-component';
 import { ZalbePrikazComponent } from './components/zalbe-prikaz/zalbe-prikaz.component';
 import { DialogOdgovorComponent } from './components/zalbe-prikaz/dialog-odgovor-component';
+import { IstruktoriComponent } from './components/istruktori/istruktori.component';
+import { IstruktorProfilComponent } from './components/istruktor-profil/istruktor-profil.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { DialogOdgovorComponent } from './components/zalbe-prikaz/dialog-odgovor
     PasswordChangeComponent,
     DialogZalbaComponent,
     DialogOdgovorComponent,
-    ZalbePrikazComponent
+    ZalbePrikazComponent,
+    IstruktoriComponent,
+    IstruktorProfilComponent
   ],
   imports: [
     BrowserModule,

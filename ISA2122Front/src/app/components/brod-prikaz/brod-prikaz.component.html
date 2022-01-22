@@ -1,3 +1,12 @@
+<mat-toolbar class="md-medium-tall" color="primary" style="margin: 2em auto; background-color: transparent;" *ngIf = "klijent">
+  <mat-toolbar-row>
+      <button mat-raised-button color="accent" [routerLink]="'/rezervacije'"> Rezervacije </button>
+      <button mat-raised-button color="accent" [routerLink]="'/brzerezervacije'"> Brze rezervacije </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
 <br><br>
 <input matInput type="text" placeholder="Filter" (input)="onSearchChange($event.target.value)"/>
 <br>
@@ -94,7 +103,7 @@
             <td>{{u.kapacitet}}</td>
             <td>{{u.oprema}}</td>
             <td>{{u.usloviOtkaza}}</td>
-            <td><input type = "button" (click)="rezervisi(u.id)" value = "rezervisi"/></td>
+            <td><input type = "button" (click)="rezervisi(u.id)" *ngIf="klijent" value = "rezervisi"/></td>
         </tr>
     </tbody>
     

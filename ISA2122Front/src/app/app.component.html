@@ -1,9 +1,8 @@
 <mat-toolbar class="md-medium-tall" style="margin-top: 20px;" color="primary">
   <mat-toolbar-row>
     <button mat-raised-button color="accent" [routerLink]="'/vikendice'"> Vikendice </button>
-    <button mat-raised-button color="accent" > Brodovi </button>
-    <button mat-raised-button color="accent" [routerLink]="'/rezervacije'"> Rezervacije </button>
-    <button mat-raised-button color="accent" [routerLink]="'/brzerezervacije'"> Brze rezervacije </button>
+    <button mat-raised-button color="accent" [routerLink]="'/brodovi'"> Brodovi </button>
+    <button mat-raised-button color="accent" [routerLink]="'/instruktori'"> Instruktori pecanja </button>
     <span class="menu-spacer"></span>
     <div>      
       <button mat-raised-button color="accent" *ngIf="!loggedIn()" [routerLink]="'/register'">Sign-up </button>

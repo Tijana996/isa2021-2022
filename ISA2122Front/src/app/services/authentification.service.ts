@@ -258,6 +258,12 @@ export class AuthentificationService {
     return JSON.parse(localStorage.getItem('currentUser') || '{}');
   }
 
+  public isKlijent(): any{
+    var user = JSON.parse(localStorage.getItem('currentUser'));
+    if(user == undefined) return false;
+    return user.roles[0] == 'ROLE_KLIJENT' ? true : false;
+  }
+
 
   public isPraviAdmin(): any{
     return JSON.parse(localStorage.getItem('currentUser') || '{}').username;

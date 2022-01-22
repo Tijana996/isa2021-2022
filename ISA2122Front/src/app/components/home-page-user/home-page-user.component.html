@@ -1,6 +1,10 @@
-<mat-toolbar class="md-medium-tall" color="primary">
+<mat-toolbar class="md-medium-tall" color="primary" style="margin: 2em auto; background-color: transparent;">
     <mat-toolbar-row>
+        <button mat-raised-button color="accent" [routerLink]="'/rezervacije'"> Rezervacije </button>
+        <button mat-raised-button color="accent" [routerLink]="'/brzerezervacije'"> Brze rezervacije </button>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
+
+

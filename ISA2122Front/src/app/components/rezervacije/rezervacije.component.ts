@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { RezervacijaService } from 'src/app/services/rezervacija.service';
 import { DialogZalbaComponent } from './dialog-zalba-component';
 
@@ -15,10 +16,13 @@ export class RezervacijeComponent implements OnInit {
   id : string;
   matDialogRef: MatDialogRef<DialogZalbaComponent>;
 
-  constructor(private _Activatedroute:ActivatedRoute, private service: RezervacijaService, private matDialog: MatDialog) { }
+  constructor(private _Activatedroute:ActivatedRoute, private service: RezervacijaService, private authService : AuthentificationService, private matDialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     
+    if(!this.authService.isKlijent())
+      this.router.navigate(['/']);
+
     this.service.getRezervacije(0).subscribe(
       result => {
         console.log(result.body);
@@ -36,6 +40,9 @@ export class RezervacijeComponent implements OnInit {
       data: rezervacija,
       disableClose: true
     });
+  }
+  
+  otkazi(id):void{
     
   }
 

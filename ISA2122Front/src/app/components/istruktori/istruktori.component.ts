@@ -1,66 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Instruktor } from 'src/app/models/instruktor';
 import { Search } from 'src/app/models/search';
-import { Vikendica } from 'src/app/models/vikendica';
 import { AuthentificationService } from 'src/app/services/authentification.service';
-import { VikendicaService } from 'src/app/services/vikendica.service';
+import { InstruktorService } from 'src/app/services/instruktor.service';
 
 @Component({
-  selector: 'app-vikendice-prikaz',
-  templateUrl: './vikendice-prikaz.component.html',
-  styleUrls: ['./vikendice-prikaz.component.scss']
+  selector: 'app-istruktori',
+  templateUrl: './istruktori.component.html',
+  styleUrls: ['./istruktori.component.scss']
 })
-export class VikendicePrikazComponent implements OnInit {
+export class IstruktoriComponent implements OnInit {
 
-  vikendice : any[];
-  vikendicePravo: [];
+  klijent : {};
+  instruktori : [];
+  instruktoriPravo : [];
   datum : string;
-  klijent : boolean;
 
-  constructor(private vikendicaService: VikendicaService, public router: Router, private service: AuthentificationService) { }
+  constructor(private service : AuthentificationService, private instruktorService: InstruktorService, private router : Router) { }
 
   ngOnInit(): void {
     this.klijent = this.service.isKlijent();
-    this.vikendicaService.getVikendice().subscribe(
+    this.instruktorService.getInstruktori().subscribe(
       result => {
         console.log(result.body);
-        this.vikendice = result.body;
-        this.vikendicePravo = result.body;
+        this.instruktori = result.body;
+        this.instruktoriPravo = result.body;
       },
       error => {
         console.log(error);
       }
     );
-    //console.log(this.vikendicaService.getVikendice());
   }
 
   detalji(id) : void{
     console.log(id);
-    this.router.navigate(['/vikendica/'+id]);
+    this.router.navigate(['/instruktor/'+id]);
   }
 
   onSearchChange(nesto : string) :void{
       console.log(nesto);
       if(nesto == "") {
-        this.vikendice = this.vikendicePravo;
+        this.instruktori = this.instruktoriPravo;
         return;
       }
-      this.vikendice = [] as any;
-      for(let i = 0 ; i < this.vikendicePravo.length; i++)
+      this.instruktori = [] as any;
+      for(let i = 0 ; i < this.instruktoriPravo.length; i++)
       {
-          console.log(this.vikendicePravo[i]);
-          var v = new Vikendica;
-          v = this.vikendicePravo[i];
-          if(v.naziv.includes(nesto) || v.adresa.includes(nesto))
+          console.log(this.instruktoriPravo[i]);
+          var v ;//= new Instruktor;
+          v = this.instruktoriPravo[i];
+          if(v.ime.includes(nesto) || v.prezime.includes(nesto) || v.lokacija.includes(nesto))
           {
-            this.vikendice.push(v);
+            this.instruktori.push(v);
           }
       }
-  }
-
-  dateChange(nesto: string){
-    console.log(nesto);
   }
 
   onSubmit(form : NgForm){
@@ -72,11 +67,11 @@ export class VikendicePrikazComponent implements OnInit {
     searchObj.dateod = form.value.dateod;
     searchObj.lokacija = form.value.lokacija;
     console.log(searchObj);
-    this.vikendicaService.getVikendiceSearch(searchObj.dateod, searchObj.datedo,searchObj.lokacija,searchObj.ocena).subscribe(
+    this.instruktorService.getInstruktorSearch(searchObj.dateod, searchObj.datedo,searchObj.lokacija,searchObj.ocena).subscribe(
       result => {
         console.log(result);
-        this.vikendice = result;
-        this.vikendicePravo = result;
+        this.instruktori = result;
+        this.instruktoriPravo = result;
       },
       error => {
         //console.log(error);
@@ -96,6 +91,6 @@ export class VikendicePrikazComponent implements OnInit {
       alert("Unesite datum da biste izvrsili rezervaciju");
       return;
     }
-    this.router.navigate(['/rezervacija/vikendica/'+id+'/'+this.datum]); 
+    this.router.navigate(['/rezervacija/instruktor/'+id+'/'+this.datum]); 
   }
 }

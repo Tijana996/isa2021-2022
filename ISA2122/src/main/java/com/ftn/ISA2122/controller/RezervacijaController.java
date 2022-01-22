@@ -3,13 +3,8 @@ package com.ftn.ISA2122.controller;
 import com.ftn.ISA2122.dto.RezervacijaDTO;
 import com.ftn.ISA2122.dto.VikendicaDTO;
 import com.ftn.ISA2122.helper.RezervacijaMapper;
-import com.ftn.ISA2122.model.Klijent;
-import com.ftn.ISA2122.model.Korisnik;
-import com.ftn.ISA2122.model.Rezervacija;
-import com.ftn.ISA2122.model.Vikendica;
-import com.ftn.ISA2122.service.KorisnikService;
-import com.ftn.ISA2122.service.RezervacijaService;
-import com.ftn.ISA2122.service.VikendicaService;
+import com.ftn.ISA2122.model.*;
+import com.ftn.ISA2122.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
@@ -38,6 +33,12 @@ public class RezervacijaController {
     @Autowired
     KorisnikService korisnikService;
 
+    @Autowired
+    BrodService brodService;
+
+    @Autowired
+    InstruktorService instruktorService;
+
     private RezervacijaMapper rezervacijaMapper;
 
     public RezervacijaController(){
@@ -53,9 +54,22 @@ public class RezervacijaController {
         rezervacijaDTO.setBrdana(daysBetween);
         Rezervacija r = rezervacijaMapper.toEntity(rezervacijaDTO);
         Klijent k = (Klijent) korisnikService.findOne(rezervacijaDTO.getKlijenti());
-        Vikendica v = vikendicaService.findOne(rezervacijaDTO.getVikendice());
+        if(rezervacijaDTO.getVikendice()!= null)
+        {
+            Vikendica v = vikendicaService.findOne(rezervacijaDTO.getVikendice());
+            r.setVikendice(v);
+        }
+        if(rezervacijaDTO.getBrodovi()!= null)
+        {
+            Brod b = brodService.findOne(rezervacijaDTO.getBrodovi());
+            r.setBrodovi(b);
+        }
+        if(rezervacijaDTO.getInstruktor()!= null)
+        {
+            InstruktorPecanja v = instruktorService.findOne(rezervacijaDTO.getInstruktor());
+            r.setInstruktori(v);
+        }
         r.setKlijenti(k);
-        r.setVikendice(v);
         rezervacijaService.create(r);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -75,11 +89,20 @@ public class RezervacijaController {
     }
 
     @PutMapping("/{korisnik}/{id}")
+    @PreAuthorize("hasRole('ROLE_KLIJENT')")
     public ResponseEntity<?> rezervisiBrzu(@PathVariable("korisnik") Long klijent_id, @PathVariable("id") Long rez_id) throws Exception {
         Klijent k = (Klijent) korisnikService.findOne(klijent_id);
         Rezervacija r = rezervacijaService.findOne(rez_id);
         r.setKlijenti(k);
         rezervacijaService.update(r,rez_id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_KLIJENT')")
+    public ResponseEntity<?> otkaziRezervaciju(@PathVariable("id") Long id) throws Exception {
+        rezervacijaService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 }

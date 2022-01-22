@@ -1,29 +1,29 @@
 <div class="dashboard-container">
-    <button mat-raised-button color="primary" routerLink="/brodovi"><span class="material-icons">keyboard_backspace</span> Back</button>
+    <button mat-raised-button color="primary" routerLink="/instruktori"><span class="material-icons">keyboard_backspace</span> Back</button>
     <mat-card>
-        <form [formGroup]="brodForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="instruktorForm" (ngSubmit)="onSubmit()">
             <div fxLayout="column">
                 <mat-form-field class="full-width-input">
-                  <label>Naziv: </label>
-                  <input matInput name="naziv" formControlName="naziv" readonly>
+                  <label>Ime: </label>
+                  <input matInput name="ime" formControlName="ime" readonly>
                 </mat-form-field>
             </div>
             <div fxLayout="column">
                 <mat-form-field class="full-width-input">
-                  <label>opis: </label>
-                  <input matInput name="opis" formControlName="opis" readonly>
+                  <label>Prezime: </label>
+                  <input matInput name="prezime" formControlName="prezime" readonly>
                 </mat-form-field>
             </div>
             <div fxLayout="column">
                 <mat-form-field class="full-width-input">
-                  <label>Adresa: </label>
-                  <input matInput name="adresa" formControlName="adresa" readonly>
+                  <label>Broj: </label>
+                  <input matInput name="broj" formControlName="broj" readonly>
                 </mat-form-field>
             </div>
             <div fxLayout="column">
                 <mat-form-field class="full-width-input">
-                  <label>cenovnik: </label>
-                  <input matInput name="cenovnik" formControlName="cenovnik" readonly>
+                  <label>Lokacija: </label>
+                  <input matInput name="lokacija" formControlName="lokacija" readonly>
                 </mat-form-field>
             </div>
             <div fxLayout="column">
@@ -34,8 +34,6 @@
             </div>
             
         </form>
-        <div fxLayout="column" *ngFor = "let i of brod.slike">
-            <img src = "data:image/jpeg;base64,{{i}}" height = "250px" width = "250px"/>
-        </div>
+        
     </mat-card>
 </div>

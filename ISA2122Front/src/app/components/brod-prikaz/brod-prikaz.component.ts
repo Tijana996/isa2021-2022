@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Brod } from 'src/app/models/brod';
+import { Search } from 'src/app/models/search';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { BrodService } from 'src/app/services/brod.service';
 
 @Component({
@@ -13,10 +16,12 @@ export class BrodPrikazComponent implements OnInit {
   brodovi : any[];
   brodoviPravo: [];
   datum : string;
+  klijent : boolean;
 
-  constructor(private brodoviService: BrodService, public router: Router) { }
+  constructor(private brodoviService: BrodService, public router: Router, private service: AuthentificationService) { }
 
   ngOnInit(): void {
+    this.klijent = this.service.isKlijent();
     this.brodoviService.getBrodovi().subscribe(
       result => {
         console.log(result.body);
@@ -53,11 +58,39 @@ export class BrodPrikazComponent implements OnInit {
       }
   }
 
-  onSubmit(nesto):void{
-
+  onSubmit(form : NgForm){
+    console.log(form.value.dateod);
+    //form.value.ocena = form.value.ocena==''?0:form.value.ocena;
+    var searchObj = new Search();
+    searchObj.ocena = form.value.ocena=='' || form.value.ocena==null?0:form.value.ocena;
+    searchObj.datedo = form.value.datedo;
+    searchObj.dateod = form.value.dateod;
+    searchObj.lokacija = form.value.lokacija;
+    console.log(searchObj);
+    this.brodoviService.getBrodSearch(searchObj.dateod, searchObj.datedo,searchObj.lokacija,searchObj.ocena).subscribe(
+      result => {
+        console.log(result);
+        this.brodovi = result;
+        this.brodoviPravo = result;
+      },
+      error => {
+        //console.log(error);
+      }
+    );
   }
 
-  setDatum(nesto):void{
+  setDatum(datum : string){
+    this.datum = datum;
+  }
 
+  rezervisi(id:number){
+    console.log(id);
+    console.log(this.datum);
+    if(this.datum == undefined) 
+    {
+      alert("Unesite datum da biste izvrsili rezervaciju");
+      return;
+    }
+    this.router.navigate(['/rezervacija/brod/'+id+'/'+this.datum]); 
   }
 }

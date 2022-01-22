@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class BrodController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getVikendice() {
+    public ResponseEntity<?> getBrodovi() {
         List<Brod> brodovi = brodService.findAll();
         List<BrodDTO> brodoviDTOs = new ArrayList<>();
         for (Brod vik: brodovi) {
@@ -39,7 +40,7 @@ public class BrodController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getVikendica(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getBrod(@PathVariable("id") Long id) {
 
         //new ResponseEntity<>(getDTOList(apoteke), HttpStatus.OK);
         Brod v = brodService.findOne(id);
@@ -48,7 +49,7 @@ public class BrodController {
 
 
     @PostMapping("/search")
-    public ResponseEntity<?> searchVikendica(@RequestBody String search){
+    public ResponseEntity<?> searchBrod(@RequestBody String search){
         try {
             SearchVikDTO searchVikDTO = new SearchVikDTO(search);
             List<Brod> brodovi = brodService.search(searchVikDTO.getDateod(), searchVikDTO.getDatedo(), searchVikDTO.getLokacija(), searchVikDTO.getOcena());

@@ -39,7 +39,7 @@ export class VikendicaService {
 
     };
 
-    return this.http.get<any>( this.newsPath+'/1', httpOptions);
+    return this.http.get<any>( this.newsPath+'/'+id, httpOptions);
   }
 
   getVikendicaSlike(id)

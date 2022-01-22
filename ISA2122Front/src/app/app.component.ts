@@ -9,11 +9,12 @@ import { AuthentificationService } from './services/authentification.service';
 })
 export class AppComponent {
   title = 'ISA2122 Front';
+  klijent = false;
   constructor(private authService: AuthentificationService,
     private router: Router){}
 
   ngOnInit(): void {
-    
+    this.klijent = this.authService.isKlijent();
   }
 
   loggedIn():boolean{

@@ -60,5 +60,16 @@ export class RezervacijaService {
 		console.log(ind);
 		return this.http.put<any>( this.newsPath+'/'+ind+'/'+id, httpOptions);
 	}
+
+	otkazi(id):Observable<any>{
+		let httpOptions = {};
+  
+		httpOptions = {
+			headers: this.headers,
+			observe: 'response',
+  
+		};
+		return this.http.delete<any>(this.newsPath+'/'+id, httpOptions);
+	}
   
 }
