@@ -2,20 +2,20 @@
 
 # Uputstvo za pokretanje projekta
 
-  -Backend
-    1. U PgAdminu (localhost) napraviti bazu tijana2
-    2. U Intellij-u otvoriti folder ISA2122. U fajlu application.properties: spring.datasource.username i spring.datasource.password postaviti na lokalni username i password, i spring.jpa.hibernate.ddl-auto postaviti na 'create'; i nakon toga pokrenuti aplikaciju
-    2. Kada je aplikacija uspesno pokrenuta, prekunti izvrsavanje, i spring.jpa.hibernate.ddl-auto podesiti na update, u fajlu data-postgres.sql otkomentarisati sve inserte i ponovo pokrenuti aplikaciju
-    3. Ukoliko se prekine izvrsavanje i aplikacija treba da se pokrene opet - zakomentarisati sve inserte u fajlu data-postgres.sql
+  #Backend
+    - U PgAdminu (localhost) napraviti bazu tijana2
+    - U Intellij-u otvoriti folder ISA2122. U fajlu application.properties: spring.datasource.username i spring.datasource.password postaviti na lokalni username i password, i spring.jpa.hibernate.ddl-auto postaviti na 'create'; i nakon toga pokrenuti aplikaciju
+    - Kada je aplikacija uspesno pokrenuta, prekunti izvrsavanje, i spring.jpa.hibernate.ddl-auto podesiti na update, u fajlu data-postgres.sql otkomentarisati sve inserte i ponovo pokrenuti aplikaciju
+    - Ukoliko se prekine izvrsavanje i aplikacija treba da se pokrene opet - zakomentarisati sve inserte u fajlu data-postgres.sql
   
-  -Frontend:
-    U Visual Studio Codu, uz pomoc naredbe 'cd' u terminalu, locirati se u folder ISA2122Front i pokrenuti izvrsavanje koda uz pomoc naredbe 'ng serve'
+  #Frontend:
+    - U Visual Studio Codu, uz pomoc naredbe 'cd' u terminalu, locirati se u folder ISA2122Front i pokrenuti izvrsavanje koda uz pomoc naredbe 'ng serve'
   
-  -Na pretrazivacu otvoriti http://localhost:4200/
+  #Na pretrazivacu otvoriti http://localhost:4200/
     
-  -Kredencijali:
-    1. Admin - email: markomarkovic@gmail.com, password: admin
-    2. Klijent - email:anaanic@gmail.com, password: admin
+  #Kredencijali:
+    - Admin - email: markomarkovic@gmail.com, password: admin
+    - Klijent - email:anaanic@gmail.com, password: admin
 
 
 target/
