@@ -16,7 +16,7 @@ public class InstruktorPecanja extends Korisnik {
     @Column
     private int ocena;
 
-    @OneToMany(mappedBy="id")
+    @OneToMany(mappedBy="instruktori")
     private Set<Rezervacija> rezervacije;
 
     public InstruktorPecanja(){}

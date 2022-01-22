@@ -1,15 +1,14 @@
 package com.ftn.ISA2122.model;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @DiscriminatorValue("VV")
 public class VlasnikVikendice extends Korisnik {
 
-    @OneToMany(mappedBy="id")
+    @OneToMany()
+    @JoinTable(name = "vlasnik_vikendice", joinColumns = @JoinColumn(name = "vlasnik_id"), inverseJoinColumns = @JoinColumn(name = "vikendica_id"))
     private Set<Vikendica> vikendice;
 
     public VlasnikVikendice(){}

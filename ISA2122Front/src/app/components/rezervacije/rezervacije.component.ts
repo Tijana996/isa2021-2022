@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { RezervacijaService } from 'src/app/services/rezervacija.service';
+import { DialogZalbaComponent } from './dialog-zalba-component';
 
 @Component({
   selector: 'app-rezervacije',
@@ -11,8 +13,9 @@ export class RezervacijeComponent implements OnInit {
 
   rezervacije : [];
   id : string;
+  matDialogRef: MatDialogRef<DialogZalbaComponent>;
 
-  constructor(private _Activatedroute:ActivatedRoute, private service: RezervacijaService) { }
+  constructor(private _Activatedroute:ActivatedRoute, private service: RezervacijaService, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     
@@ -25,6 +28,14 @@ export class RezervacijeComponent implements OnInit {
         //console.log(error);
       }
     );
+    
+  }
+
+  napisiZalbu(rezervacija):void{
+    this.matDialogRef = this.matDialog.open(DialogZalbaComponent, {
+      data: rezervacija,
+      disableClose: true
+    });
     
   }
 

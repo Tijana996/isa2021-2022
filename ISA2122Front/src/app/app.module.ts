@@ -34,9 +34,13 @@ import { MatTableModule } from '@angular/material/table';
 import { HomePageAdminComponent } from './components/home-page-admin/home-page-admin.component';
 import { ZahteviRegistracijaPrikazComponent } from './components/zahtevi-registracija-prikaz/zahtevi-registracija-prikaz.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatRadioModule} from "@angular/material/radio";
 import { DialogComponent } from './components/zahtevi-registracija-prikaz/dialog-component';
 import { RegisterAdminComponent } from './components/register-admin/register-admin.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { DialogZalbaComponent } from './components/rezervacije/dialog-zalba-component';
+import { ZalbePrikazComponent } from './components/zalbe-prikaz/zalbe-prikaz.component';
+import { DialogOdgovorComponent } from './components/zalbe-prikaz/dialog-odgovor-component';
 
 @NgModule({
   declarations: [
@@ -56,7 +60,10 @@ import { PasswordChangeComponent } from './components/password-change/password-c
     ZahteviRegistracijaPrikazComponent,
     DialogComponent,
     RegisterAdminComponent,
-    PasswordChangeComponent
+    PasswordChangeComponent,
+    DialogZalbaComponent,
+    DialogOdgovorComponent,
+    ZalbePrikazComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +83,7 @@ import { PasswordChangeComponent } from './components/password-change/password-c
     MatOptionModule,
     MatTableModule,
     MatDialogModule,
+    MatRadioModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: JSON.parse(localStorage.getItem('currentUser') || '{"token":""}')?.token,

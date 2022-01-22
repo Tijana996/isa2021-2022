@@ -1,6 +1,5 @@
 package com.ftn.ISA2122.service;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -9,8 +8,6 @@ import java.util.List;
 import com.ftn.ISA2122.model.*;
 import com.ftn.ISA2122.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

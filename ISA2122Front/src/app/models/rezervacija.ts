@@ -6,6 +6,8 @@ export class Rezervacija{
     brdana : number;
     klijenti : number;
     vikendice: number;
+    brodovi: number;
+    instruktor: number;
 
     constructor(){}
 

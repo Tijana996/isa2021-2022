@@ -13,6 +13,7 @@ import { VikendicaProfilComponent } from './components/vikendica-profil/vikendic
 import { VikendicaRezervacijaComponent } from './components/vikendica-rezervacija/vikendica-rezervacija.component';
 import { VikendicePrikazComponent } from './components/vikendice-prikaz/vikendice-prikaz.component';
 import { ZahteviRegistracijaPrikazComponent } from './components/zahtevi-registracija-prikaz/zahtevi-registracija-prikaz.component';
+import { ZalbePrikazComponent } from './components/zalbe-prikaz/zalbe-prikaz.component';
 
 const routes: Routes = [
   { path: 'home-page-user', component : HomePageUserComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'rezervacije', component: RezervacijeComponent },
   { path: 'brzerezervacije', component: BrzeRezervacijeComponent },
   { path: 'zahtevi', component: ZahteviRegistracijaPrikazComponent },
+  { path: 'zalbe', component: ZalbePrikazComponent },
 ];
 
 @NgModule({
